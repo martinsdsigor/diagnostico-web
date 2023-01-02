@@ -5,6 +5,6 @@ Test Setup    Usuario ter acessado o sistema
 
 
 *** Test Cases ***
-Realizar login
+Cenário: Login realizado com sucesso
     Usuario efetua o login
 

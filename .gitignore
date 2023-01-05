@@ -2,3 +2,6 @@ venv
 *.png
 *.html
 *.xml
+log/
+.idea/
+.vscode/

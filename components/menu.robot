@@ -10,8 +10,9 @@ ${menu_busca_variaveis}    xpath://a[.='historyBusca de variáveis']
 ${menu_graficos}    xpath://a[.='pollGráficos']
 
 # Filtro
+${filtro_button_filtros}    xpath://button[.='filter_listFiltros']
 ${filtro_icone_voltar}    xpath://a[.='arrow_back']
-${filtro_periodo}    xpath://app-input-box[1]/div[@class='input-box-content']
+${filtro_periodo}    xpath://div[@class='mat-select-trigger ng-tns-c81-28']
 ${filtro_input_ultimos_periodo}    xpath://div[@class='mat-select-trigger ng-tns-c81-4']
 ${filtro_select_ultimos_periodo}    xpath://section[@class='inputSelect']
 ${filtro_input_ultimas_propostas}    xpath://span[.='Últimas propostas']/following-sibling::input

@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation       Locators para as funcionalidades Menu e Filtro
 
+
 *** Variables ***
 # Menu lateral
 ${menu_detalhamento}                    xpath://a[.='account_treeDetalhamento']

@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation       Locators para a funcionalidade Login
 
+
 *** Variables ***
 #Login
 ${txt_email}        css:body > app-root > app-login > div > div > app-auth > form > div:nth-child(1) > input

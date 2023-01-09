@@ -7,7 +7,6 @@ Usuario ter acessado o sistema
     Open Browser    ${BASE_URL}    ${BROWSER}
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
 
-
 Evidenciar teste na pasta
     [Arguments]    ${folder}
 
@@ -24,12 +23,11 @@ Evidenciar teste na pasta
     Sleep    1s
 
     IF    '${TEST_STATUS}' == 'PASS'
-        Capture Page Screenshot     filename=${tag} [ SUCESSO ] ${date_formated}.png
+        Capture Page Screenshot    filename=${tag} [ SUCESSO ] ${date_formated}.png
     ELSE IF    '${TEST_STATUS}' == 'FAIL'
-            Capture Page Screenshot     filename=${tag} [ FALHA ] ${date_formated}.png
+        Capture Page Screenshot    filename=${tag} [ FALHA ] ${date_formated}.png
     END
-  
-    
+
 Organizar arquivos de log
     [Arguments]    ${file_extension}    ${folder}
 
@@ -40,8 +38,6 @@ Organizar arquivos de log
         Move File    ${item}    ${folder}
     END
 
-    
 Trocar para aba
     [Arguments]    ${title}
     Switch Window    title:${title}    timeout=${IMPLICITY_WAIT}
-

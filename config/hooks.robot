@@ -1,15 +1,18 @@
 *** Settings ***
-
-Library    SeleniumLibrary
-
+Library     SeleniumLibrary
 Resource    ./config.robot
+
 
 *** Keywords ***
 Usuario ter acessado o sistema
-    Open Browser                ${BASE_URL}       ${BROWSER}
-    Set Selenium Implicit Wait  ${IMPLICITY_WAIT}
+    Open Browser    ${BASE_URL}    ${BROWSER}
+    Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
 
 Usuario realiza screenshot
     [Arguments]    ${page}
     Set Screenshot Directory    ${OUTPUT_DIR}
-    Capture Page Screenshot     ${page}.png
+    Capture Page Screenshot    ${page}.png
+
+Trocar para aba
+    [Arguments]    ${title}
+    Switch Window    title:${title}    timeout=${IMPLICITY_WAIT}

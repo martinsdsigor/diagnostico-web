@@ -1,12 +1,16 @@
 *** Settings ***
 
 Library    SeleniumLibrary
+Library    String
+Library    OperatingSystem
+Library    DateTime
+Library    Collections
 
 Resource    ./config.robot
 Resource    ./hooks.robot
 
 # Componentes
-Resource    ../components/login.robot
+Resource    ../locators/login.robot
 
 # Pages
 Resource    ../pages/LoginPage.robot

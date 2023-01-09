@@ -1,15 +1,12 @@
 *** Settings ***
-
 Resource    ./mapper.robot
-Resource    ./config.robot
-
-
 
 
 *** Keywords ***
 Usuario ter acessado o sistema
-    Open Browser                ${BASE_URL}       ${BROWSER}
-    Set Selenium Implicit Wait  ${IMPLICITY_WAIT}
+    Open Browser    ${BASE_URL}    ${BROWSER}
+    Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
+
 
 Evidenciar teste na pasta
     [Arguments]    ${folder}
@@ -33,8 +30,6 @@ Evidenciar teste na pasta
     END
   
     
-    
-
 Organizar arquivos de log
     [Arguments]    ${file_extension}    ${folder}
 
@@ -46,3 +41,7 @@ Organizar arquivos de log
     END
 
     
+Trocar para aba
+    [Arguments]    ${title}
+    Switch Window    title:${title}    timeout=${IMPLICITY_WAIT}
+

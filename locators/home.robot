@@ -1,8 +1,7 @@
 *** Settings ***
-Documentation    Componentes para a página inicial
+Documentation       Locators para a funcionalidade inicial
 
 *** Variables ***
-
 # Página inicial
-${workflow_diagnostico}     xpath://a[.='Diagnóstico']
-${gateway_diagnostico_gtw}    xpath://a[.='Diagnóstico Gateway']
+${home_workflow_diagnostico}    xpath://a[.='Diagnóstico']
+${home_gateway_diagnostico}     xpath://a[.='Diagnóstico Gateway']

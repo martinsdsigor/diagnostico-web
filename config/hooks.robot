@@ -6,6 +6,9 @@ Resource    ./mapper.robot
 Usuario ter acessado o sistema
     Open Browser    ${BASE_URL}    ${BROWSER}
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
+    Organizar arquivos de log    deletar    png    
+    
+    
 
 Evidenciar teste na pasta
     [Arguments]    ${folder}
@@ -28,15 +31,31 @@ Evidenciar teste na pasta
         Capture Page Screenshot    filename=${tag} [ FALHA ] ${date_formated}.png
     END
 
+    
 Organizar arquivos de log
-    [Arguments]    ${file_extension}    ${folder}
+    [Arguments]    ${action}    ${file_extension}    ${folder}=${None}
 
-    Create Directory    ${folder}
     ${directory_list}    List Files In Directory    ${EXECDIR}    *.${file_extension}
 
-    FOR    ${item}    IN    @{directory_list}
-        Move File    ${item}    ${folder}
+    IF    '${action}' == 'mover'
+
+        Create Directory    ${folder}
+        
+        FOR    ${item}    IN    @{directory_list}
+            Move File    ${item}    ${folder}
+            Log To Console    ${item} movido para pasta ${folder}
+        END
+
+    ELSE IF    '${action}' == 'deletar'
+
+        FOR    ${item}    IN    @{directory_list}
+            Remove File    ${item}
+            Log To Console    ${item} deletado!!
+        END
+        
     END
+
+    
 
 Trocar para aba
     [Arguments]    ${title}

@@ -10,7 +10,7 @@ Usuario loga e acessa o produto
     Informar as credenciais de acesso     ${USERNAME}   ${PASSWORD}
     Acionar Diagnostico Workflow
     Trocar para aba    Diagnóstico Workflow
-    Organizar arquivos de log    deletar    png  
+    Organizar arquivos de log    deletar    png
 
 Evidenciar teste na pasta
     [Arguments]    ${folder}
@@ -33,7 +33,7 @@ Evidenciar teste na pasta
         Capture Page Screenshot    filename=${tag} [ FALHA ] ${date_formated}.png
     END
 
-    
+
 Organizar arquivos de log
     [Arguments]    ${action}    ${file_extension}    ${folder}=${None}
 
@@ -42,7 +42,7 @@ Organizar arquivos de log
     IF    '${action}' == 'mover'
 
         Create Directory    ${folder}
-        
+
         FOR    ${item}    IN    @{directory_list}
             Move File    ${item}    ${folder}
             Log To Console    ${item} movido para pasta ${folder}
@@ -54,11 +54,23 @@ Organizar arquivos de log
             Remove File    ${item}
             Log To Console    ${item} deletado!!
         END
-        
+
     END
 
-    
+
 
 Trocar para aba
     [Arguments]    ${title}
     Switch Window    title:${title}    timeout=${IMPLICITY_WAIT}
+
+Dado ${keyword}
+    Run Keyword    ${keyword}
+
+Quando ${keyword}
+    Run Keyword    ${keyword}
+
+Então ${keyword}
+    Run Keyword    ${keyword}
+
+E ${keyword}
+    Run Keyword    ${keyword}

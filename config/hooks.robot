@@ -7,6 +7,7 @@ Resource    ../pages/HomePage.robot
 Usuario loga e acessa o produto
     Open Browser    ${BASE_URL}    ${BROWSER}
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
+    Informar as credenciais de acesso     ${USERNAME}   ${PASSWORD}
     Acionar Diagnostico Workflow
     Trocar para aba    Diagnóstico Workflow
     Organizar arquivos de log    deletar    png  

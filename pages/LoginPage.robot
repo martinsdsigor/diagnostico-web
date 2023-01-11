@@ -3,7 +3,7 @@ Resource    ../config/mapper.robot
 
 
 *** Keywords ***
-Quando o usuario informar as credenciais
+Informar as credenciais de acesso
     [Arguments]    ${user}    ${pass}
     Wait Until Element Is Visible    ${txt_email}    ${IMPLICITY_WAIT}
     Input Text    ${txt_email}    ${user}

@@ -1,14 +1,15 @@
 *** Settings ***
 Resource    ./mapper.robot
+Resource    ../pages/HomePage.robot
 
 
 *** Keywords ***
-Usuario ter acessado o sistema
+Usuario loga e acessa o produto
     Open Browser    ${BASE_URL}    ${BROWSER}
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
-    Organizar arquivos de log    deletar    png    
-    
-    
+    Acionar Diagnostico Workflow
+    Trocar para aba    Diagnóstico Workflow
+    Organizar arquivos de log    deletar    png  
 
 Evidenciar teste na pasta
     [Arguments]    ${folder}

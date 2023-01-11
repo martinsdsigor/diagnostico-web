@@ -28,6 +28,7 @@ Informar Período por data
     @{start_date_splitted}    Split String    ${Data_Inicial}    separator=/
 
     Click Element    ${filtro_periodo}
+    Wait Until Element Is Enabled    ${calendar_input_start_date}
     Click Element    ${calendar_input_start_date}
 
     Informar ano    ${start_date_splitted}[2]

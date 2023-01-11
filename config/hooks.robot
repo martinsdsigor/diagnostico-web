@@ -6,6 +6,7 @@ Resource    ../pages/HomePage.robot
 *** Keywords ***
 Usuario loga e acessa o produto
     Open Browser    ${BASE_URL}    ${BROWSER}
+    Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
     Informar as credenciais de acesso     ${USERNAME}   ${PASSWORD}
     Acionar Diagnostico Workflow
@@ -63,8 +64,9 @@ Trocar para aba
     [Arguments]    ${title}
     Switch Window    title:${title}    timeout=${IMPLICITY_WAIT}
 
-Dado ${keyword}
-    Run Keyword    ${keyword}
+Dado     Run Keyword    Set Test Variable  ${keyword}
+    
+    
 
 Quando ${keyword}
     Run Keyword    ${keyword}
@@ -72,5 +74,5 @@ Quando ${keyword}
 Então ${keyword}
     Run Keyword    ${keyword}
 
-E ${keyword}
-    Run Keyword    ${keyword}
+# E ${keyword}
+#     Run Keyword    ${keyword}

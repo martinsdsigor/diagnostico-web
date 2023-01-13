@@ -5,7 +5,7 @@ Resource    ../pages/HomePage.robot
 
 *** Keywords ***
 Usuario loga e acessa o produto
-    Open Browser    ${BASE_URL}    ${BROWSER}
+    Open Browser    ${BASE_URL}    ${BROWSER}    
     Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
     Informar as credenciais de acesso     ${USERNAME}   ${PASSWORD}
@@ -34,6 +34,7 @@ Evidenciar teste na pasta
         Capture Page Screenshot    filename=${tag} [ FALHA ] ${date_formated}.png
     END
 
+    Close Browser
 
 Organizar arquivos de log
     [Arguments]    ${action}    ${file_extension}    ${folder}=${None}
@@ -64,15 +65,6 @@ Trocar para aba
     [Arguments]    ${title}
     Switch Window    title:${title}    timeout=${IMPLICITY_WAIT}
 
-Dado     Run Keyword    Set Test Variable  ${keyword}
-    
-    
-
-Quando ${keyword}
-    Run Keyword    ${keyword}
-
-Então ${keyword}
-    Run Keyword    ${keyword}
-
-# E ${keyword}
-#     Run Keyword    ${keyword}
+Retornar para aba
+    [Arguments]    ${path}
+    Switch Window    url:https://rsk-neurotools-tst.riskpack.com.br/#/${path}

@@ -32,5 +32,5 @@ Informar dia
     Should Contain    ${class}    selected
 
 Acionar Definir
-    Wait Until Element Is Visible    ${calendar_button_definir}
+    Wait Until Element Is Visible    ${calendar_button_definir}    ${IMPLICITY_WAIT}
     Click Element    ${calendar_button_definir}

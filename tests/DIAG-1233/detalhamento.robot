@@ -2,7 +2,7 @@
 Resource            ../../config/mapper.robot
 
 Test Setup          Usuario loga e acessa o produto
-Test Teardown       Evidenciar teste na pasta    detalhamento
+Test Teardown       Evidenciar teste na pasta    DIAG-1233
 
 
 *** Test Cases ***

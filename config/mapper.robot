@@ -5,6 +5,7 @@ Library     OperatingSystem
 Library     DateTime
 Library     Collections
 Library     XML
+Library     Process
 
 Resource    ./config.robot
 Resource    ./hooks.robot

@@ -5,10 +5,11 @@ Resource    ../pages/HomePage.robot
 
 *** Keywords ***
 Usuario loga e acessa o produto
-    Open Browser    ${BASE_URL}    ${BROWSER}    
+    ${prefs}    Create Dictionary    download.default_directory=${EXECDIR}/files/downloads
+    Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs})
     Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
-    Informar as credenciais de acesso     ${USERNAME}   ${PASSWORD}
+    Informar as credenciais de acesso    ${USERNAME}    ${PASSWORD}
     Acionar Diagnostico Workflow
     Trocar para aba    Diagnóstico Workflow
     Organizar arquivos de log    deletar    png
@@ -16,6 +17,7 @@ Usuario loga e acessa o produto
 Evidenciar teste na pasta
     [Arguments]    ${folder}
 
+    Organizar arquivos de log    deletar    csv
     ${full_directory}    Convert To String    ${SCREENSHOT_OUTPUTDIR}/${folder}
     Create Directory    ${full_directory}
     Set Screenshot Directory    ${full_directory}
@@ -37,34 +39,33 @@ Evidenciar teste na pasta
     Close Browser
 
 Organizar arquivos de log
-    [Arguments]    ${action}    ${file_extension}    ${folder}=${None}
+    [Arguments]    ${action}    ${file_extension}    ${folder}=${None}    ${directory}=${EXECDIR}//files//downloads
 
-    ${directory_list}    List Files In Directory    ${EXECDIR}    *.${file_extension}
+    ${directory_list}    List Files In Directory    ${directory}    *.${file_extension}
 
     IF    '${action}' == 'mover'
-
         Create Directory    ${folder}
 
         FOR    ${item}    IN    @{directory_list}
             Move File    ${item}    ${folder}
             Log To Console    ${item} movido para pasta ${folder}
         END
-
     ELSE IF    '${action}' == 'deletar'
-
         FOR    ${item}    IN    @{directory_list}
-            Remove File    ${item}
+            Remove File    ${directory}/${item}
             Log To Console    ${item} deletado!!
         END
-
     END
 
-
-
 Trocar para aba
-    [Arguments]    ${title}
-    Switch Window    title:${title}    timeout=${IMPLICITY_WAIT}
+    [Arguments]    ${value}    ${locator}=title
+    Switch Window    ${locator}:${value}    timeout=${IMPLICITY_WAIT}
 
 Retornar para aba
     [Arguments]    ${path}
     Switch Window    url:https://rsk-neurotools-tst.riskpack.com.br/#/${path}
+
+Verificar se download foi concluído
+    [Arguments]    ${filename}=${None}
+    ${file}    Get File Size    ${EXECDIR}/files/downloads/${filename}
+    Should Not Be Equal As Integers    ${file}    ${0}

@@ -14,21 +14,21 @@ E informar a politica
 
 Quando fizer o upload do arquivo
     [Arguments]    ${file_name}
-    
+
     Wait Until Element Is Enabled    ${input_importar_csv}
     ${file_extension}    Split String    ${file_name}    separator=.
-    
-    Choose File    ${input_importar_csv}    ${EXECDIR}\\files\\${file_name}
+
+    Choose File    ${input_importar_csv}    ${EXECDIR}/files/${file_name}
 
     IF    '${file_extension[1]}' == csv
 
-        ${size}    Get File Size    ${EXECDIR}\\files\\${file_name}
+        ${size}    Get File Size    ${EXECDIR}/files/${file_name}
 
         IF    '${size}' > '0'
             ${span_file}    Get WebElement    //span[text()="Arquivo Importado: ${file_name}"]
             Element Should Contain    ${span_file}    Arquivo Importado: ${file_name}
         END
-        
+
     END
 
 Então é exibido um toast com a mensagem

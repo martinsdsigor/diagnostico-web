@@ -6,13 +6,14 @@ Resource    ../pages/HomePage.robot
 *** Keywords ***
 Usuario loga e acessa o produto
     ${prefs}    Create Dictionary    download.default_directory=${EXECDIR}/files/downloads
-    Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs})
+    
+    Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs});add_experimental_option("excludeSwitches", ["enable-logging"])
     Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
     Informar as credenciais de acesso    ${USERNAME}    ${PASSWORD}
     Acionar Diagnostico Workflow
     Trocar para aba    Diagnóstico Workflow
-    Organizar arquivos de log    deletar    png
+    Organizar arquivos de log    directory=${EXECDIR}    action=deletar    file_extension=png
 
 Evidenciar teste na pasta
     [Arguments]    ${folder}
@@ -41,6 +42,7 @@ Evidenciar teste na pasta
 Organizar arquivos de log
     [Arguments]    ${action}    ${file_extension}    ${folder}=${None}    ${directory}=${EXECDIR}//files//downloads
 
+    
     ${directory_list}    List Files In Directory    ${directory}    *.${file_extension}
 
     IF    '${action}' == 'mover'

@@ -34,7 +34,8 @@ Quando fizer o upload do arquivo
 Então é exibido um toast com a mensagem
     [Arguments]    ${mensagem}
     Sleep    2s
-    Retornar para aba    workflow/trace/submission
+    Trocar para aba   https://rsk-neurotools-tst.riskpack.com.br/#/workflow/trace/submission    locator=url
+    # Retornar para aba    workflow/trace/submission
     Wait Until Element Is Visible    ${toast}    ${IMPLICITY_WAIT}
     Element Should Contain    ${toast}    ${mensagem}
 

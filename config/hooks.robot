@@ -6,7 +6,7 @@ Resource    ../pages/HomePage.robot
 *** Keywords ***
 Usuario loga e acessa o produto
     ${prefs}    Create Dictionary    download.default_directory=${EXECDIR}/files/downloads
-    
+
     Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs});add_experimental_option("excludeSwitches", ["enable-logging"])
     Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
@@ -42,7 +42,7 @@ Evidenciar teste na pasta
 Organizar arquivos de log
     [Arguments]    ${action}    ${file_extension}    ${folder}=${None}    ${directory}=${EXECDIR}//files//downloads
 
-    
+
     ${directory_list}    List Files In Directory    ${directory}    *.${file_extension}
 
     IF    '${action}' == 'mover'
@@ -61,10 +61,12 @@ Organizar arquivos de log
 
 Trocar para aba
     [Arguments]    ${value}    ${locator}=title
+    Sleep    1s
     Switch Window    ${locator}:${value}    timeout=${IMPLICITY_WAIT}
 
 Retornar para aba
     [Arguments]    ${path}
+    Sleep    1s
     Switch Window    url:https://rsk-neurotools-tst.riskpack.com.br/#/${path}
 
 Verificar se download foi concluído

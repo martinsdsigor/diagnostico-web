@@ -10,3 +10,4 @@ ${btn_remover}              //span[text()="REMOVER"]
 ${label_politica}           //div[@class="select-label"]
 ${input_politica}           //div[@class="search-box ng-star-inserted"]/input
 ${input_importar_csv}       //div[@class="input-box-file ng-star-inserted"]/input
+${input_chave}              //div[@class="input-box-policy"]/child::app-input-box[2]

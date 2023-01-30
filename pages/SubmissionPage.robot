@@ -21,11 +21,11 @@ Quando fizer o upload do arquivo
     Wait Until Element Is Enabled    ${input_importar_csv}
     ${file_extension}    Split String    ${file_name}    separator=.
 
-    Choose File    ${input_importar_csv}    ${EXECDIR}/files/${file_name}
+    Choose File    ${input_importar_csv}    ${EXECDIR}/files/uploads/${file_name}
 
     IF    '${file_extension[1]}' == csv
 
-        ${size}    Get File Size    ${EXECDIR}/files/${file_name}
+        ${size}    Get File Size    ${EXECDIR}/files/uploads/${file_name}
 
         IF    '${size}' > '0'
             ${span_file}    Get WebElement    //span[text()="Arquivo Importado: ${file_name}"]

@@ -5,8 +5,11 @@ Resource    ../pages/HomePage.robot
 
 *** Keywords ***
 Usuario loga e acessa o produto
-    ${prefs}    Create Dictionary    download.default_directory=${EXECDIR}/files/downloads
 
+    ${download_directory}    Join Path    ${EXECDIR}    files    downloads
+    ${prefs}    Create Dictionary    download.default_directory=${download_directory}
+    # ${prefs}    Create Dictionary    download.default_directory=${EXECDIR}/files/downloads
+    
     Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs});add_experimental_option("excludeSwitches", ["enable-logging"])
     Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
@@ -18,7 +21,7 @@ Usuario loga e acessa o produto
 Evidenciar teste na pasta
     [Arguments]    ${folder}
 
-    Organizar arquivos de log    deletar    csv
+    
     ${full_directory}    Convert To String    ${SCREENSHOT_OUTPUTDIR}/${folder}
     Create Directory    ${full_directory}
     Set Screenshot Directory    ${full_directory}
@@ -38,6 +41,8 @@ Evidenciar teste na pasta
     END
 
     Close Browser
+
+    Organizar arquivos de log    deletar    csv
 
 Organizar arquivos de log
     [Arguments]    ${action}    ${file_extension}    ${folder}=${None}    ${directory}=${EXECDIR}//files//downloads

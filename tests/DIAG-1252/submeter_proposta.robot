@@ -11,7 +11,7 @@ Test Teardown    Evidenciar teste na pasta    DIAG-1252
 *** Test Cases ***
 Submeter política importando CSV 
     [Tags]    DIAG-1253
-    Dado ter selecionado um periodo para consultar
+    DetalhamentoPage.Dado ter selecionado um periodo para consultar
     E acionado o botão submeter proposta
     E informar a politica    RECEITA_FEDERAL    PROP_CPF
     Quando fizer o upload do arquivo    Entradas.csv
@@ -20,7 +20,7 @@ Submeter política importando CSV
 
 Validar submissão somente com arquivo CSV
     [Tags]    DIAG-1254
-    Dado ter selecionado um periodo para consultar
+    DetalhamentoPage.Dado ter selecionado um periodo para consultar
     E acionado o botão submeter proposta
     E informar a politica    RECEITA_FEDERAL    PROP_CPF    
     Quando fizer o upload do arquivo    teste.pdf
@@ -28,7 +28,7 @@ Validar submissão somente com arquivo CSV
 
 Submissão de política com arquivo importado vazio
     [Tags]    DIAG-1255
-    Dado ter selecionado um periodo para consultar
+    DetalhamentoPage.Dado ter selecionado um periodo para consultar
     E acionado o botão submeter proposta
     E informar a politica    RECEITA_FEDERAL    PROP_CPF
     Quando fizer o upload do arquivo    Arquivo-vazio.csv
@@ -36,7 +36,7 @@ Submissão de política com arquivo importado vazio
 
 Submeter política importando CSV com apenas entradas
     [Tags]    DIAG-1384
-    Dado ter selecionado um periodo para consultar
+    DetalhamentoPage.Dado ter selecionado um periodo para consultar
     E acionado o botão submeter proposta
     E informar a politica    RECEITA_FEDERAL    PROP_CPF
     Quando fizer o upload do arquivo    Apenas-entradas.csv
@@ -45,7 +45,7 @@ Submeter política importando CSV com apenas entradas
 
 Importar CSV e modificando valores antes da submissão
     [Tags]    DIAG-1385
-    Dado ter selecionado um periodo para consultar
+    DetalhamentoPage.Dado ter selecionado um periodo para consultar
     E acionado o botão submeter proposta
     E informar a politica    RECEITA_FEDERAL    PROP_CPF
     Quando fizer o upload do arquivo    Entradas.csv
@@ -55,7 +55,7 @@ Importar CSV e modificando valores antes da submissão
 
 Adicionar entrada antes de submeter proposta
     [Tags]    DIAG-1040
-    Dado ter selecionado um periodo para consultar
+    DetalhamentoPage.Dado ter selecionado um periodo para consultar
     E acionado o botão submeter proposta
     E informar a politica    RECEITA_FEDERAL    PROP_CPF
     Quando adicionar uma nova entrada    ENTRADA_TESTE
@@ -64,7 +64,7 @@ Adicionar entrada antes de submeter proposta
 
 Submeter Proposta com sucesso
     [Tags]    DIAG-1042
-    Dado ter selecionado um periodo para consultar
+    DetalhamentoPage.Dado ter selecionado um periodo para consultar
     E acionado o botão submeter proposta
     E informar a politica    RECEITA_FEDERAL    PROP_CPF
     E acionado o botão submeter proposta
@@ -72,7 +72,7 @@ Submeter Proposta com sucesso
 
 Remover entrada antes de submeter proposta
     [Tags]    PENDENTE
-    Dado ter selecionado um periodo para consultar
+    DetalhamentoPage.Dado ter selecionado um periodo para consultar
     E acionado o botão submeter proposta
     E informar a politica    RECEITA_FEDERAL    PROP_CPF
     Quando remover uma entrada    PROP_NOME

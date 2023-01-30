@@ -20,3 +20,4 @@ ${detalhamento_exportar_variaveis}               xpath://span[text()='EXPORTAR V
 ${detalhamento_primeira_variavel}                xpath://div[contains(@class, 'variable-table-values-wrapper')]/div[1]/div/div[@class='column-key']
 ${detalhamento_table_variaveis}                  xpath://div[contains(@class, 'variable-table-values-wrapper')]
 ${detalhamento_valor_processado}                 xpath://div[contains(@class, 'variable-table-values-wrapper')]/div[1]/div/div[@class='column-value']
+${detalhamento_table_cod_operacao}               xpath://table/thead/tr/th[3][.=' Cód. Operação ']

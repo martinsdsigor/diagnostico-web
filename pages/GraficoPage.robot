@@ -9,6 +9,12 @@ Dado ter selecionado um periodo para consultar
     Informar Período por data    11/01/2023
     Acionar Consultar
 
+Quando selecionar um periodo para consultar
+    Acionar Gráficos
+    Acionar Filtros
+    Informar Período por data    11/01/2023
+    Acionar Consultar
+
 
 Quando selecionar o tipo de grafico para download
     [Arguments]    ${grafico}
@@ -40,3 +46,13 @@ Então é exibido na lista o gráfico
     Sleep    1s
     Scroll Element Into View    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]
     Element Should Be Visible    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]
+
+
+Então não é exibido na lista o gráfico
+    [Arguments]    ${grafico}
+
+    Wait Until Element Is Enabled    ${tipo_de_grafico}
+    Click Element    ${tipo_de_grafico}
+    Sleep    1s
+    # Scroll Element Into View    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]
+    Element Should Not Be Visible    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]

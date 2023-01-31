@@ -90,3 +90,11 @@ Trocar para conta
     Input Text    //input[@placeholder="Digite aqui"]    ${conta}
     Wait Until Element Is Visible    //div[@class="content-options"]/p[1]
     Click Element    //div[@class="content-options"]/p[1]
+
+
+Dado ter selecionado a conta
+    [Arguments]    ${conta}
+    Trocar para conta    ${conta}
+    Sleep    1s
+    Acionar Diagnostico Workflow
+    Trocar para aba    Diagnóstico Workflow

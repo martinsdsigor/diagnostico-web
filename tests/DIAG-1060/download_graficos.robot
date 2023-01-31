@@ -151,3 +151,16 @@ Validar tipo de gráfico Distribuição por IP de Origem é visível para conta 
     [Tags]    DIAG-1617
     GraficoPage.Dado ter selecionado um periodo para consultar
     Então é exibido na lista o gráfico    Distribuição por IP de Origem
+
+
+Validar tipo de gráfico Distribuição por IP de Origem é oculto para contratante diferente de neurotech
+    [Tags]    DIAG-1612
+    Dado ter selecionado a conta    INFRACOMMERCE
+    Quando selecionar um periodo para consultar
+    Então não é exibido na lista o gráfico    Distribuição por IP de Origem
+
+Validar tipo de gráfico Distribuição por IP de Servidor é oculto para contratante diferente de neurotech
+    [Tags]    DIAG-1613
+    Dado ter selecionado a conta    INFRACOMMERCE
+    Quando selecionar um periodo para consultar
+    Então não é exibido na lista o gráfico    Distribuição por IP de Servidor

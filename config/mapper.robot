@@ -6,6 +6,7 @@ Library     DateTime
 Library     Collections
 Library     XML
 Library     Process
+Library     os
 
 Resource    ./config.robot
 Resource    ./hooks.robot
@@ -16,6 +17,7 @@ Resource    ../locators/menu.robot
 Resource    ../locators/home.robot
 Resource    ../locators/detalhamento.robot
 Resource    ../locators/submission.robot
+Resource    ../locators/graficos.robot
 
 # Components
 Resource    ../components/menu.robot
@@ -27,3 +29,4 @@ Resource    ../components/table.robot
 Resource    ../pages/LoginPage.robot
 Resource    ../pages/DetalhamentoPage.robot
 Resource    ../pages/SubmissionPage.robot
+Resource    ../pages/GraficoPage.robot

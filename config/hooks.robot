@@ -78,3 +78,15 @@ Verificar se download foi concluído
     [Arguments]    ${filename}=${None}
     ${file}    Get File Size    ${EXECDIR}/files/downloads/${filename}
     Should Not Be Equal As Integers    ${file}    ${0}
+
+Trocar para conta
+    [Arguments]    ${conta}
+
+    Close Window
+    Trocar para aba    Portal Riskpack
+    Wait Until Element Is Visible    //label[@class="label-select"]
+    Click Element    //label[@class="label-select"]
+    Wait Until Element Is Visible    //input[@placeholder="Digite aqui"]
+    Input Text    //input[@placeholder="Digite aqui"]    ${conta}
+    Wait Until Element Is Visible    //div[@class="content-options"]/p[1]
+    Click Element    //div[@class="content-options"]/p[1]

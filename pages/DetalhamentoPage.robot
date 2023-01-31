@@ -37,6 +37,11 @@ Quando fizer a busca por uma variável
     Set Test Variable    ${Detalhamento_Filtrar_Variaveis}    ${caracteres}
     Input Text    ${detalhamento_filtro_variaveis}    ${caracteres}
 
+Quando acionar a coluna
+    [Arguments]    ${column}
+    Wait Until Element Is Visible    xpath://table/thead/tr/th[.=' ${column} ']
+    Click Element    xpath://table/thead/tr/th[.=' ${column} ']
+
 E informar um período
     [Arguments]    ${Data Inicial}    ${Data Final}=${None}
     Informar Período por data    ${Data Inicial}    ${Data Final}
@@ -60,6 +65,44 @@ E acionar "Fluxo da Política" no menu lateral
 
 E clicar em "Exportar Variáveis"
     Click Button    ${detalhamento_exportar_variaveis}
+
+E visualizar a mensagem "Abra os filtros e faça uma busca."
+    Element Should Be Visible    ${detalhamento_mensagem_inicial}
+    Page Should Contain Element    ${detalhamento_mensagem_inicial}
+
+E Cód. Operação deve estar visivel como terceira coluna
+    Element Should Be Visible    ${detalhamento_table_cod_operacao}
+    Page Should Contain Element    ${detalhamento_table_cod_operacao}
+
+E exibir uma seta apontada para cima próximo ao nome
+    [Arguments]    ${column}
+    Wait Until Element is Visible    xpath://div[.=' ${column} ']/following-sibling::div
+    ${atributos}    SeleniumLibrary.Get Element Attribute
+    ...    xpath://div[.=' ${column} ']/following-sibling::div
+    ...    style
+    ${ordem}    SeleniumLibrary.Get Element Attribute    xpath://div[.=' ${column} ']/parent::th    aria-sort
+    Should Be Equal As Strings    ${ordem}    ascending
+    Should Contain    ${atributos}    opacity: 1
+
+E exibir uma seta apontada para baixo próximo ao nome
+    [Arguments]    ${column}
+    Wait Until Element is Visible    xpath://div[.=' ${column} ']/following-sibling::div
+    ${atributos}    SeleniumLibrary.Get Element Attribute
+    ...    xpath://div[.=' ${column} ']/following-sibling::div
+    ...    style
+    ${ordem}    SeleniumLibrary.Get Element Attribute    xpath://div[.=' ${column} ']/parent::th    aria-sort
+    Should Be Equal As Strings    ${ordem}    descending
+    Should Contain    ${atributos}    opacity: 1;
+
+E não exibirá uma seta ao lado do nome
+    [Arguments]    ${column}
+    Element Should Not Be Visible    xpath://div[.=' ${column} ']/following-sibling::div
+    ${atributos}    SeleniumLibrary.Get Element Attribute
+    ...    xpath://div[.=' ${column} ']/following-sibling::div
+    ...    style
+    ${ordem}    SeleniumLibrary.Get Element Attribute    xpath://div[.=' ${column} ']/parent::th    aria-sort
+    Should Be Equal As Strings    ${ordem}    none
+    Should Contain    ${atributos}    opacity: 0;
 
 Então os resultados devem ser filtrados de acordo com o período
     [Arguments]    ${Período}
@@ -122,3 +165,35 @@ Então informações de IP de Origem e IP de servidor são exibidas
     Page Should Contain    Versão XML
     Page Should Contain    IP de origem
     Page Should Contain    IP de servidor
+
+Então o sistema deve ordernar os resultados
+    [Arguments]    ${coluna}    ${ordem}=crescente
+    Sleep    3s
+    # Pega a quantidade de linhas visíveis da tabela, por ex: 20
+    ${cells}    SeleniumLibrary.Get Element Count    xpath://table/tbody/tr/td[${coluna}]
+    FOR    ${counter}    IN RANGE    1    ${cells}
+        # Pega o texto do elemento na posição counter, por ex: 1
+        ${current}    Get Text    xpath://table/tbody/tr[${counter}]/td[${coluna}]
+        # Pega o texto do elemento seguinte a posição do counter, por ex: 2
+        ${next}    Get Text    xpath://table/tbody/tr[${counter+1}]/td[${coluna}]
+
+        IF    '${ordem}' == 'crescente'
+            # Verifica se o valor atual é menor que o próximo valor
+            IF    '${current}' < '${next}'    RETURN
+        ELSE IF    '${ordem}' == 'decrescente'
+            IF    '${current}' > '${next}'    RETURN
+        END
+    END
+
+Então o sistema ordenará por Data mais recente
+    Sleep    3s
+    # Pega a quantidade de linhas visíveis da tabela, por ex: 20
+    ${cells}    SeleniumLibrary.Get Element Count    xpath://table/tbody/tr/td[5]
+    FOR    ${counter}    IN RANGE    1    ${cells}
+        # Pega o texto do elemento na posição counter, por ex: 1
+        ${current}    Get Text    xpath://table/tbody/tr[${counter}]/td[5]
+        # Pega o texto do elemento seguinte a posição do counter, por ex: 2
+        ${next}    Get Text    xpath://table/tbody/tr[${counter+1}]/td[5]
+        # Valida se a linha atual é menor que a próxima linha
+        IF    '${current}' < '${next}'    RETURN
+    END

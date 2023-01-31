@@ -9,7 +9,7 @@ Usuario loga e acessa o produto
     ${download_directory}    Join Path    ${EXECDIR}    files    downloads
     ${prefs}    Create Dictionary    download.default_directory=${download_directory}
     # ${prefs}    Create Dictionary    download.default_directory=${EXECDIR}/files/downloads
-    
+
     Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs});add_experimental_option("excludeSwitches", ["enable-logging"])
     Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
@@ -21,7 +21,7 @@ Usuario loga e acessa o produto
 Evidenciar teste na pasta
     [Arguments]    ${folder}
 
-    
+
     ${full_directory}    Convert To String    ${SCREENSHOT_OUTPUTDIR}/${folder}
     Create Directory    ${full_directory}
     Set Screenshot Directory    ${full_directory}
@@ -95,6 +95,8 @@ Trocar para conta
 Dado ter selecionado a conta
     [Arguments]    ${conta}
     Trocar para conta    ${conta}
+    ${visivel}  Run Keyword And Return Status    Element Should Be Visible    ${home_button_termo_aceite}
+    Run Keyword If    ${visivel}    Click Button    ${home_button_termo_aceite}
     Sleep    1s
     Acionar Diagnostico Workflow
     Trocar para aba    Diagnóstico Workflow

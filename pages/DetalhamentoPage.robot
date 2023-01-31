@@ -152,11 +152,19 @@ Então os resultados devem ser filtrados de acordo com o período
     ${quantidade_resultados}    SeleniumLibrary.Get Element Count    ${detalhamento_table_resultados}
     Should Not Be Equal As Integers    ${quantidade_resultados}    ${0}
 
-    ${date_hour_table_value}    Get Text    ${detalhamento_table_resultados}/td[5]/span
-    ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[3]/span
+    ${infracommerce_date_column_visible}    Run Keyword And Return Status    Element Should Be Visible    ${detalhamento_table_resultados}/td[4]/span
 
-    Should Contain    ${date_hour_table_value}    ${Período}
-    Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
+    IF    ${infracommerce_date_column_visible}
+         ${infracommerce_date_column}   Get Text    ${detalhamento_table_resultados}/td[4]/span
+         Should Contain    ${infracommerce_date_column}    ${Período}
+         ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[2]/span
+         Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
+    ELSE
+        ${neurotech_date_column}    Get Text    ${detalhamento_table_resultados}/td[5]/span
+         Should Contain    ${neurotech_date_column}    ${Período}
+         ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[3]/span
+         Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
+    END
 
 Então devo visualizar o código da operação no cabeçalho da proposta
     Retornar para aba    workflow/trace/detailing/${detalhamento_cod_operacao}/variables
@@ -266,3 +274,7 @@ Então o sistema redireciona para uma nova aba, exibindo os resultados do regist
 Então os botões "Primeira página" e "Voltar página" ficarão habilitados
     Element Should Be Enabled    ${detalhamento_button_pagina_anterior}
     Element Should Be Enabled    ${detalhamento_button_primeira_pagina}
+
+Então informações de IP de Origem e IP de servidor não devem ser exibidas
+    Page Should Not Contain    IP de origem
+    Page Should Not Contain    IP de servidor

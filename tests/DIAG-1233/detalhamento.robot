@@ -71,3 +71,14 @@ Validar que detalhamento do registro exibe informações de Ip de Origem e Servi
     E informar opção "Detalhamento"
     E acionar "Geral" no menu lateral
     Então informações de IP de Origem e IP de servidor são exibidas
+
+Validar que detalhamento do registro não exibe informações de Ip de Origem e Servidor para conta sem ser Neurotech
+    [Tags]    DIAG-1627
+    Dado ter selecionado a conta    INFRACOMMERCE
+    Quando acionar Filtros
+    E informar um período    13/01/2023
+    Então os resultados devem ser filtrados de acordo com o período    13/01/2023
+    E quando acionar os 3 pontos ao final da primeira proposta
+    E informar opção "Detalhamento"
+    E acionar "Geral" no menu lateral
+    Então informações de IP de Origem e IP de servidor não devem ser exibidas

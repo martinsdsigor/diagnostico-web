@@ -21,3 +21,10 @@ ${detalhamento_primeira_variavel}                xpath://div[contains(@class, 'v
 ${detalhamento_table_variaveis}                  xpath://div[contains(@class, 'variable-table-values-wrapper')]
 ${detalhamento_valor_processado}                 xpath://div[contains(@class, 'variable-table-values-wrapper')]/div[1]/div/div[@class='column-value']
 ${detalhamento_table_cod_operacao}               xpath://table/thead/tr/th[3][.=' Cód. Operação ']
+${detalhamento_button_ultima_pagina}             xpath://button[@aria-label='Última página']
+${detalhamento_button_proxima_pagina}            xpath://button[@aria-label='Próximo']
+${detalhamento_button_pagina_anterior}           xpath://button[@aria-label='Anterior']
+${detalhamento_button_primeira_pagina}           xpath://button[@aria-label='Primeira página']
+${detalhamento_select_paginacao}                 xpath://mat-select[@aria-label='Itens por página']
+${detalhamento_button_ressubmeter}               xpath://span[text()='RESSUBMETER']/parent::button
+${detalhamento_button_painel}                    xpath://span[text()='PAINEL']/parent::button

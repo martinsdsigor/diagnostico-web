@@ -2,6 +2,10 @@
 Resource    ../config/mapper.robot
 
 
+*** Variables ***
+@{registros_cod_operacao}
+
+
 *** Keywords ***
 Dado ter selecionado um periodo para consultar
     Acionar Filtros
@@ -41,6 +45,36 @@ Quando acionar a coluna
     [Arguments]    ${column}
     Wait Until Element Is Visible    xpath://table/thead/tr/th[.=' ${column} ']
     Click Element    xpath://table/thead/tr/th[.=' ${column} ']
+
+Quando acionar botão
+    [Arguments]    ${button_label}
+    Wait Until Element Is Visible    xpath://button[@aria-label='${button_label}']
+    Click Button    xpath://button[@aria-label='${button_label}']
+
+Quando informar a quantidade de propostas
+    [Arguments]    ${quantidade}
+    Element Should Be Visible    ${detalhamento_select_paginacao}
+    Click Element    ${detalhamento_select_paginacao}
+    Wait Until Element Is Visible    xpath://mat-option[@role='option']/span[text()=' ${quantidade} ']
+    Click Element    xpath://mat-option[@role='option']/span[text()=' ${quantidade} ']
+
+Quando acionar o checkbox do registro
+    [Arguments]    @{linha}
+    FOR    ${counter}    IN    @{linha}
+        Element Should Be Visible    xpath://table/tbody/tr[${counter}]/td[1]/mat-checkbox
+        Click Element    xpath://table/tbody/tr[${counter}]/td[1]/mat-checkbox
+        ${checked}    SeleniumLibrary.Get Element Attribute
+        ...    xpath://table/tbody/tr[${counter}]/td[1]/mat-checkbox
+        ...    class
+        ${cod_ope}    SeleniumLibrary.Get Text    xpath://table/tbody/tr[${counter}]/td[3]/span
+        Append To List    ${registros_cod_operacao}    ${cod_ope}
+        Should Contain    ${checked}    mat-checkbox-checked
+    END
+    Set Test Variable    @{registros_cod_operacao}
+
+Quando acionar "Painel"
+    Element Should Be Visible    ${detalhamento_button_painel}
+    Click Button    ${detalhamento_button_painel}
 
 E informar um período
     [Arguments]    ${Data Inicial}    ${Data Final}=${None}
@@ -103,6 +137,15 @@ E não exibirá uma seta ao lado do nome
     ${ordem}    SeleniumLibrary.Get Element Attribute    xpath://div[.=' ${column} ']/parent::th    aria-sort
     Should Be Equal As Strings    ${ordem}    none
     Should Contain    ${atributos}    opacity: 0;
+
+E indicador de quantidade deve exibir
+    [Arguments]    ${mensagem}
+    ${valor}    SeleniumLibrary.Get Text    xpath://span[@class='select-count ng-star-inserted']
+    Should Be Equal    ${valor}    ${mensagem}
+
+E botão "Ressubmeter" desabilitado
+    Wait Until Element Is Visible    ${detalhamento_button_ressubmeter}
+    Element Should Be Disabled    ${detalhamento_button_ressubmeter}
 
 Então os resultados devem ser filtrados de acordo com o período
     [Arguments]    ${Período}
@@ -197,3 +240,29 @@ Então o sistema ordenará por Data mais recente
         # Valida se a linha atual é menor que a próxima linha
         IF    '${current}' < '${next}'    RETURN
     END
+
+Então deve ser exibida a última página de resultados da busca
+    ${disabled}    SeleniumLibrary.Get Element Attribute    ${detalhamento_button_ultima_pagina}    disabled
+    Should Be Equal    true    ${disabled}
+    Element Should Be Disabled    ${detalhamento_button_ultima_pagina}
+
+Então a quantidade de propostas deve ser igual a
+    [Arguments]    ${quantidade}
+    Element Should Be Visible    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
+    ${valor}    SeleniumLibrary.Get Text
+    ...    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
+    Should Contain    ${valor}    ${quantidade}
+
+Então botões "Ressubmeter" e "Painel" são habilitados
+    Element Should Be Visible    ${detalhamento_button_ressubmeter}
+    Element Should Be Visible    ${detalhamento_button_painel}
+
+Então o sistema redireciona para uma nova aba, exibindo os resultados do registro selecionado
+    Trocar para aba    Painel de Regras
+    FOR    ${cod_operacao}    IN    @{registros_cod_operacao}
+        Page Should Contain    ${cod_operacao}
+    END
+
+Então os botões "Primeira página" e "Voltar página" ficarão habilitados
+    Element Should Be Enabled    ${detalhamento_button_pagina_anterior}
+    Element Should Be Enabled    ${detalhamento_button_primeira_pagina}

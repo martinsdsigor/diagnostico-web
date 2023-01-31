@@ -126,3 +126,91 @@ Ordernar resultados por Sucesso
     Quando acionar a coluna    Sucesso
     Então o sistema ordenará por Data mais recente
     E não exibirá uma seta ao lado do nome    Sucesso
+
+Validar botão última página
+    [Tags]    DIAG-443
+    Dado que esteja na tela inicial Detalhamento
+    E visualizar a mensagem "Abra os filtros e faça uma busca."
+    Quando acionar Filtros
+    E informar um período    13/01/2023
+    Quando acionar botão    Última página
+    Então deve ser exibida a última página de resultados da busca
+
+Validar botão voltar página
+    [Tags]    DIAG-441
+    Dado que esteja na tela inicial Detalhamento
+    E visualizar a mensagem "Abra os filtros e faça uma busca."
+    Quando acionar Filtros
+    E informar um período    13/01/2023
+    Quando acionar botão    Próximo
+    Então a quantidade de propostas deve ser igual a    21 - 40
+    Quando acionar botão    Anterior
+    Então a quantidade de propostas deve ser igual a    1 - 20
+
+Validar botão próxima página
+    [Tags]    DIAG-442
+    Dado que esteja na tela inicial Detalhamento
+    E visualizar a mensagem "Abra os filtros e faça uma busca."
+    Quando acionar Filtros
+    E informar um período    13/01/2023
+    Quando acionar botão    Próximo
+    Então a quantidade de propostas deve ser igual a    21 - 40
+
+Validar propostas por página
+    [Tags]    DIAG-439
+    Dado que esteja na tela inicial Detalhamento
+    E visualizar a mensagem "Abra os filtros e faça uma busca."
+    Quando acionar Filtros
+    E informar um período    9/01/2023    13/01/2023
+    Então a quantidade de propostas deve ser igual a    1 - 20
+    Quando informar a quantidade de propostas    40
+    Então a quantidade de propostas deve ser igual a    1 - 40
+    Quando informar a quantidade de propostas    80
+    Então a quantidade de propostas deve ser igual a    1 - 80
+
+Validar botão primeira página
+    [Tags]    DIAG-440
+    Dado que esteja na tela inicial Detalhamento
+    E visualizar a mensagem "Abra os filtros e faça uma busca."
+    Quando acionar Filtros
+    E informar um período    13/01/2023
+    Quando acionar botão    Próximo
+    Então os botões "Primeira página" e "Voltar página" ficarão habilitados
+    Quando acionar botão    Primeira página
+    Então a quantidade de propostas deve ser igual a    1 - 20
+
+#Ressubmeter Proposta como uma ação em lote
+    # [Tags]    DIAG-????
+    # Dado que esteja na tela inicial Detalhamento
+    # E visualizar a mensagem "Abra os filtros e faça uma busca."
+    # Quando acionar Filtros
+    # E informar um período    13/01/2023
+    # Quando acionar o checkbox do registro    1    2    3
+    # E indicador de quantidade deve exibir    3 selecionados
+
+#Abrir multi painel no diagnóstico workflow
+#    [Tags]    DIAG-1353
+#    Dado que esteja na tela inicial Detalhamento
+#    E visualizar a mensagem "Abra os filtros e faça uma busca."
+#    Quando acionar Filtros
+#    E informar um período    13/01/2023
+#    Quando acionar o checkbox do registro    1
+#    Então botões "Ressubmeter" e "Painel" são habilitados
+#    E indicador de quantidade deve exibir    1 selecionado
+#    Quando acionar o checkbox do registro    2
+#    E indicador de quantidade deve exibir    2 selecionados
+#    E botão "Ressubmeter" desabilitado
+#    Quando acionar "Painel"
+#    Então o sistema redireciona para uma nova aba, exibindo os resultados do registro selecionado
+
+Abrir painel simples através do diagnóstico workflow
+    [Tags]    DIAG-1352
+    Dado que esteja na tela inicial Detalhamento
+    E visualizar a mensagem "Abra os filtros e faça uma busca."
+    Quando acionar Filtros
+    E informar um período    13/01/2023
+    Quando acionar o checkbox do registro    1
+    Então botões "Ressubmeter" e "Painel" são habilitados
+    E indicador de quantidade deve exibir    1 selecionado
+    Quando acionar "Painel"
+    Então o sistema redireciona para uma nova aba, exibindo os resultados do registro selecionado

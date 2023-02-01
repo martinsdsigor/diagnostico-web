@@ -54,6 +54,7 @@ Quando acionar botão
 Quando informar a quantidade de propostas
     [Arguments]    ${quantidade}
     Element Should Be Visible    ${detalhamento_select_paginacao}
+    Scroll Element Into View    ${detalhamento_select_paginacao}
     Click Element    ${detalhamento_select_paginacao}
     Wait Until Element Is Visible    xpath://mat-option[@role='option']/span[text()=' ${quantidade} ']
     Click Element    xpath://mat-option[@role='option']/span[text()=' ${quantidade} ']
@@ -152,18 +153,20 @@ Então os resultados devem ser filtrados de acordo com o período
     ${quantidade_resultados}    SeleniumLibrary.Get Element Count    ${detalhamento_table_resultados}
     Should Not Be Equal As Integers    ${quantidade_resultados}    ${0}
 
-    ${infracommerce_date_column_visible}    Run Keyword And Return Status    Element Should Be Visible    ${detalhamento_table_resultados}/td[4]/span
+    ${infracommerce_date_column_visible}    Run Keyword And Return Status
+    ...    Element Should Be Visible
+    ...    ${detalhamento_table_resultados}/td[4]/span
 
     IF    ${infracommerce_date_column_visible}
-         ${infracommerce_date_column}   Get Text    ${detalhamento_table_resultados}/td[4]/span
-         Should Contain    ${infracommerce_date_column}    ${Período}
-         ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[2]/span
-         Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
+        ${infracommerce_date_column}    Get Text    ${detalhamento_table_resultados}/td[4]/span
+        Should Contain    ${infracommerce_date_column}    ${Período}
+        ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[2]/span
+        Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
     ELSE
         ${neurotech_date_column}    Get Text    ${detalhamento_table_resultados}/td[5]/span
-         Should Contain    ${neurotech_date_column}    ${Período}
-         ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[3]/span
-         Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
+        Should Contain    ${neurotech_date_column}    ${Período}
+        ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[3]/span
+        Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
     END
 
 Então devo visualizar o código da operação no cabeçalho da proposta
@@ -256,7 +259,9 @@ Então deve ser exibida a última página de resultados da busca
 
 Então a quantidade de propostas deve ser igual a
     [Arguments]    ${quantidade}
-    Element Should Be Visible    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
+    Wait Until Element Is Visible
+    ...    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
+    Scroll Element Into View    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
     ${valor}    SeleniumLibrary.Get Text
     ...    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
     Should Contain    ${valor}    ${quantidade}

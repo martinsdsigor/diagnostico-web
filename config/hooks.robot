@@ -10,7 +10,7 @@ Usuario loga e acessa o produto
     ${prefs}    Create Dictionary    download.default_directory=${download_directory}
     # ${prefs}    Create Dictionary    download.default_directory=${EXECDIR}/files/downloads
 
-    Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs});add_experimental_option("excludeSwitches", ["enable-logging"])
+    Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs});add_experimental_option("excludeSwitches", ["enable-logging"]) 
     Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
     Informar as credenciais de acesso    ${USERNAME}    ${PASSWORD}
@@ -76,6 +76,7 @@ Retornar para aba
 
 Verificar se download foi concluído
     [Arguments]    ${filename}=${None}
+    Sleep    2s
     ${file}    Get File Size    ${EXECDIR}/files/downloads/${filename}
     Should Not Be Equal As Integers    ${file}    ${0}
 

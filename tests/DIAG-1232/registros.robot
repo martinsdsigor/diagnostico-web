@@ -22,10 +22,10 @@ Ordernar resultados por Cód. Operação
     Quando acionar Filtros
     E informar um período    13/01/2023
     Quando acionar a coluna    Cód. Operação
-    Então o sistema deve ordernar os resultados    coluna=3    ordem=crescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=3    ordem=crescente
     E exibir uma seta apontada para cima próximo ao nome    Cód. Operação
     Quando acionar a coluna    Cód. Operação
-    Então o sistema deve ordernar os resultados    coluna=3    ordem=decrescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=3    ordem=decrescente
     E exibir uma seta apontada para baixo próximo ao nome    Cód. Operação
     Quando acionar a coluna    Cód. Operação
     Então o sistema ordenará por Data mais recente
@@ -38,10 +38,10 @@ Ordernar resultados por Data/Hora
     Quando acionar Filtros
     E informar um período    13/01/2023
     Quando acionar a coluna    Data/Hora
-    Então o sistema deve ordernar os resultados    coluna=5    ordem=crescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=5    ordem=crescente
     E exibir uma seta apontada para cima próximo ao nome    Data/Hora
     Quando acionar a coluna    Data/Hora
-    Então o sistema deve ordernar os resultados    coluna=5    ordem=decrescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=5    ordem=decrescente
     E exibir uma seta apontada para baixo próximo ao nome    Data/Hora
     Quando acionar a coluna    Data/Hora
     Então o sistema ordenará por Data mais recente
@@ -54,10 +54,10 @@ Ordernar resultados por Cliente
     Quando acionar Filtros
     E informar um período    13/01/2023
     Quando acionar a coluna    Cliente
-    Então o sistema deve ordernar os resultados    coluna=2    ordem=crescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=2    ordem=crescente
     E exibir uma seta apontada para cima próximo ao nome    Cliente
     Quando acionar a coluna    Cliente
-    Então o sistema deve ordernar os resultados    coluna=2    ordem=decrescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=2    ordem=decrescente
     E exibir uma seta apontada para baixo próximo ao nome    Cliente
     Quando acionar a coluna    Cliente
     Então o sistema ordenará por Data mais recente
@@ -70,10 +70,10 @@ Ordernar resultados por Política
     Quando acionar Filtros
     E informar um período    13/01/2023
     Quando acionar a coluna    Política
-    Então o sistema deve ordernar os resultados    coluna=6    ordem=crescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=6    ordem=crescente
     E exibir uma seta apontada para cima próximo ao nome    Política
     Quando acionar a coluna    Política
-    Então o sistema deve ordernar os resultados    coluna=6    ordem=decrescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=6    ordem=decrescente
     E exibir uma seta apontada para baixo próximo ao nome    Política
     Quando acionar a coluna    Política
     Então o sistema ordenará por Data mais recente
@@ -86,10 +86,10 @@ Ordernar resultados por Resultado
     Quando acionar Filtros
     E informar um período    13/01/2023
     Quando acionar a coluna    Resultado
-    Então o sistema deve ordernar os resultados    coluna=8    ordem=crescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=8    ordem=crescente
     E exibir uma seta apontada para cima próximo ao nome    Resultado
     Quando acionar a coluna    Resultado
-    Então o sistema deve ordernar os resultados    coluna=8    ordem=decrescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=8    ordem=decrescente
     E exibir uma seta apontada para baixo próximo ao nome    Resultado
     Quando acionar a coluna    Resultado
     Então o sistema ordenará por Data mais recente
@@ -102,10 +102,10 @@ Ordernar resultados por Proposta
     Quando acionar Filtros
     E informar um período    13/01/2023
     Quando acionar a coluna    Proposta
-    Então o sistema deve ordernar os resultados    coluna=4    ordem=crescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=4    ordem=crescente
     E exibir uma seta apontada para cima próximo ao nome    Proposta
     Quando acionar a coluna    Proposta
-    Então o sistema deve ordernar os resultados    coluna=4    ordem=decrescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=4    ordem=decrescente
     E exibir uma seta apontada para baixo próximo ao nome    Proposta
     Quando acionar a coluna    Proposta
     Então o sistema ordenará por Data mais recente
@@ -118,10 +118,10 @@ Ordernar resultados por Sucesso
     Quando acionar Filtros
     E informar um período    13/01/2023
     Quando acionar a coluna    Sucesso
-    Então o sistema deve ordernar os resultados    coluna=7    ordem=crescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=7    ordem=crescente
     E exibir uma seta apontada para cima próximo ao nome    Sucesso
     Quando acionar a coluna    Sucesso
-    Então o sistema deve ordernar os resultados    coluna=7    ordem=decrescente
+    DetalhamentoPage.Então o sistema deve ordernar os resultados    coluna=7    ordem=decrescente
     E exibir uma seta apontada para baixo próximo ao nome    Sucesso
     Quando acionar a coluna    Sucesso
     Então o sistema ordenará por Data mais recente
@@ -163,9 +163,9 @@ Validar propostas por página
     Quando acionar Filtros
     E informar um período    9/01/2023    13/01/2023
     Então a quantidade de propostas deve ser igual a    1 - 20
-    Quando informar a quantidade de propostas    40
+    DetalhamentoPage.Quando informar a quantidade de propostas    40
     Então a quantidade de propostas deve ser igual a    1 - 40
-    Quando informar a quantidade de propostas    80
+    DetalhamentoPage.Quando informar a quantidade de propostas    80
     Então a quantidade de propostas deve ser igual a    1 - 80
 
 Validar botão primeira página

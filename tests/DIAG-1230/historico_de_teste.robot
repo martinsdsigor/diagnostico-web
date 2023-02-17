@@ -81,7 +81,7 @@ Validar quantidade de 80 itens por paginação
     [Tags]    DIAG-1755
     Dado que esteja na tela inicial Submissão
     Quando acionar Filtros
-    E informar um período    1/02/2016  1/02/2023
+    E informar um período    1/01/2016  17/02/2023
     SubmissionPage.Quando informar a quantidade de propostas    80
     Então a quantidade de propostas deve ser igual a    1 - 80
 

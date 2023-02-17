@@ -13,3 +13,6 @@ ${input_importar_csv}                   //div[@class="input-box-file ng-star-ins
 ${input_chave}                          //div[@class="input-box-policy"]/child::app-input-box[2]
 ${submissao_texto_itens_por_pagina}     xpath://div[text()=' Itens por página ']
 ${submissao_select_itens_por_pagina}    xpath://mat-select[@role='combobox']
+${submissao_menu_relatorio_cobertura}   //span[.='Relatório de cobertura  ']/parent::a
+${submissao_menu_graficos}              //span[.='Gráficos ']/parent::a
+${submissao_botao_exportar_relatorio}   //b[.='EXPORTAR RELATÓRIO']/parent::span/parent::button

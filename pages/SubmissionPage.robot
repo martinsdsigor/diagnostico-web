@@ -92,3 +92,49 @@ Quando informar a quantidade de propostas
     Click Element    ${submissao_select_itens_por_pagina}
     Wait Until Element Is Visible    xpath://mat-option[@role='option']/span[text()=' ${quantidade} ']
     Click Element    xpath://mat-option[@role='option']/span[text()=' ${quantidade} ']
+
+Quando acionar os 3 pontos ao final da primeira proposta
+    Wait Until Element Is Visible    //table/tbody/tr[1]/td[9]
+    Click Element    //table/tbody/tr[1]/td[9]
+    ${id_do_teste}    SeleniumLibrary.Get Text    //table/tbody/tr[1]/td[3]
+    ${politica_do_teste}    SeleniumLibrary.Get Text    //table/tbody/tr[1]/td[5]
+    ${nome_do_teste}    SeleniumLibrary.Get Text    //table/tbody/tr[1]/td[2]
+    Set Test Variable    ${submissao_id_do_teste}    ${id_do_teste}
+    Set Test Variable    ${submissao_politica}    ${politica_do_teste}
+    Set Test Variable    ${submissao_nome}    ${nome_do_teste}
+
+E acionar "Detalhamento do teste"
+    Wait Until Element Is Visible    //div[@id='mat-menu-panel-2']
+    Click Element    //button[.=' Detalhamento do teste ']
+
+Quando acionar "Gráficos" no menu lateral
+    Wait Until Element Is Enabled    //span[text()='Gráficos ']/parent::a
+    Click Element    //span[text()='Gráficos ']/parent::a
+
+E acionar "Exportar Relatório"
+    Wait Until Element Is Visible    ${submissao_botao_exportar_relatorio}
+    Click Button    ${submissao_botao_exportar_relatorio}
+
+Então o sistema deve iniciar o download do arquivo
+    [Arguments]    ${extensao_arquivo}=pdf
+    ${nome_do_teste_uppercase}    Convert To Upper Case    ${submissao_nome}
+    Verificar se download foi concluído    filename=Report_${nome_do_teste_uppercase}.${extensao_arquivo}
+
+Então o sistema deve exibir os gráficos e dados da duração do teste
+    Page Should Contain    ${submissao_nome}
+    Page Should Contain    ${submissao_id_do_teste}
+    Page Should Contain    ${submissao_politica}
+    Page Should Contain    Gráfico da Execução
+    Page Should Contain    Gráfico do resultado
+    Page Should Contain    Dados da duração do teste
+    Page Should Contain    Tempo máximo
+    Page Should Contain    Tempo médio
+    Page Should Contain    Tempo mínimo
+    Page Should Contain    Desvio Padrão
+    Page Should Contain    Tempo Total de processamento
+    Page Should Contain    Quantidade total de proposta
+
+Então o sistema exibirá detalhes sobre a submissão
+    Page Should Contain    ${submissao_nome}
+    Page Should Contain    ${submissao_id_do_teste}
+    Page Should Contain    ${submissao_politica}

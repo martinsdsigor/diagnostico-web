@@ -9,7 +9,8 @@ E informar a politica
     Wait Until Element Is Enabled    ${label_politica}    ${IMPLICITY_WAIT}
     Click Element    ${label_politica}
     Input Text    ${input_politica}    ${politica}
-    Wait Until Element Is Enabled    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
+    Wait Until Element Is Enabled
+    ...    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
     Click Element    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
 
     Click Element    ${input_chave}
@@ -79,9 +80,9 @@ Então o sistema deve ordernar os resultados
         ${next}    Get Text    xpath://table/tbody/tr[${counter+3}]/td[${coluna}]
 
         IF    '${ordem}' == 'crescente'
-            IF    '${current}' < '${next}'    RETURN
+            IF    '${current}' < '${next}'                CONTINUE
         ELSE IF    '${ordem}' == 'decrescente'
-            IF    '${current}' > '${next}'    RETURN
+            IF    '${current}' > '${next}'                CONTINUE
         END
     END
 
@@ -105,14 +106,16 @@ Quando acionar os 3 pontos ao final da primeira proposta
 
 E acionar "Detalhamento do teste"
     Wait Until Element Is Visible    //div[@id='mat-menu-panel-2']
-    Click Element    //button[.=' Detalhamento do teste ']
+    Click Element    ${submissao_botao_detalhamento_do_teste}
 
 Quando acionar "Gráficos" no menu lateral
-    Wait Until Element Is Enabled    //span[text()='Gráficos ']/parent::a
-    Click Element    //span[text()='Gráficos ']/parent::a
+    Wait Until Element Is Visible    ${submissao_menu_graficos}    timeout=20s
+    Wait Until Element Is Enabled    ${submissao_menu_graficos}    timeout=30s
+    Click Element    ${submissao_menu_graficos}
 
 E acionar "Exportar Relatório"
-    Wait Until Element Is Visible    ${submissao_botao_exportar_relatorio}
+    Wait Until Element Is Visible    ${submissao_botao_exportar_relatorio}    timeout=20s
+    Wait Until Element Is Enabled    ${submissao_botao_exportar_relatorio}    timeout=30s
     Click Button    ${submissao_botao_exportar_relatorio}
 
 Então o sistema deve iniciar o download do arquivo
@@ -134,7 +137,14 @@ Então o sistema deve exibir os gráficos e dados da duração do teste
     Page Should Contain    Tempo Total de processamento
     Page Should Contain    Quantidade total de proposta
 
-Então o sistema exibirá detalhes sobre a submissão
+Então o sistema exibirá relatório de cobertura da submissão
+    Wait Until Page Contains    ${submissao_nome}
     Page Should Contain    ${submissao_nome}
     Page Should Contain    ${submissao_id_do_teste}
     Page Should Contain    ${submissao_politica}
+    Page Should Contain    Submissões
+    Page Should Contain    Submissões com sucesso
+    Page Should Contain    Regra
+    Page Should Contain    Ocorrências
+    Page Should Contain    Cobertura
+    Page Should Contain    Valor

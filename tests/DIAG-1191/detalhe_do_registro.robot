@@ -1,5 +1,7 @@
 *** Settings ***
-Resource    ../../config/mapper.robot
+Documentation       [WKF] Diagnóstico > Submissão > Detalhe do Registro
+
+Resource            ../../config/mapper.robot
 
 Test Setup          Usuario loga e acessa o produto
 Test Teardown       Evidenciar teste na pasta    DIAG-1191
@@ -10,10 +12,10 @@ Detalhamento do Teste: Relatório de cobertura
     [Tags]    DIAG-1046
     Dado que esteja na tela inicial Submissão
     Quando acionar Filtros
-    E informar um período    1/02/2022    1/02/2023
+    E informar um período    13/02/2023
     Quando acionar os 3 pontos ao final da primeira proposta
     E acionar "Detalhamento do teste"
-    Então o sistema exibirá detalhes sobre a submissão
+    Então o sistema exibirá relatório de cobertura da submissão
 
 Detalhamento do Teste: Gráficos
     [Tags]    DIAG-1045

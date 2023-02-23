@@ -1,4 +1,6 @@
 *** Settings ***
+Documentation       [WKF] Diagnóstico > Detalhamento > Detalhamento
+
 Resource            ../../config/mapper.robot
 
 Test Setup          Usuario loga e acessa o produto

@@ -241,7 +241,7 @@ Então o sistema listará apenas o status
     ...    Element Should Contain    ${toast}    Nenhum teste encontrado!
 
     IF    ${mensagem_visivel}
-        Pass Execution    Nenhum teste encontrado!
+        Fail    Nenhum teste encontrado!
     ELSE
         ${linha}    SeleniumLibrary.Get Element Count    ${submissao_table_resultados}/tbody/tr
         FOR    ${counter}    IN RANGE    1    ${linha}    3

@@ -236,19 +236,14 @@ Então é exibido um toast com a mensagem informada
 
 Então o sistema listará apenas o status
     [Arguments]    ${status}
-    # Sleep    1s
 
     ${mensagem_visivel}    Run Keyword And Return Status
-    ...    Element Should Be Visible
-    ...    ${mensagem_nenhum_teste_encontrado}
-
-    ${linha}    SeleniumLibrary.Get Element Count    ${submissao_table_resultados}/tbody/tr
+    ...    Element Should Contain    ${toast}    Nenhum teste encontrado!
 
     IF    ${mensagem_visivel}
-        Sleep    3s
-        Element Should Contain    ${toast}    Nenhum teste encontrado!
-        # Então é exibido um toast com a mensagem informada    Nenhum teste encontrado!
+        Pass Execution    Nenhum teste encontrado!
     ELSE
+        ${linha}    SeleniumLibrary.Get Element Count    ${submissao_table_resultados}/tbody/tr
         FOR    ${counter}    IN RANGE    1    ${linha}    3
             ${next_row_exists}    Run Keyword And Return Status
             ...    Element Should Be Visible

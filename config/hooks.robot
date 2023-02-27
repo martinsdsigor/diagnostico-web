@@ -40,7 +40,9 @@ Evidenciar teste na pasta
         Capture Page Screenshot    filename=${tag} [ FALHA ] ${date_formated}.png
     END
 
-    Close Browser
+    # Close Browser
+
+    Close All Browsers
 
     Organizar arquivos de log    deletar    csv
 

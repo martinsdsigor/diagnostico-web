@@ -5,9 +5,9 @@ Resource    ../config/mapper.robot
 *** Keywords ***
 E informar a politica
     [Arguments]    ${politica}    ${chave}
-
+    
     Wait Until Element Is Enabled    ${label_politica}    ${IMPLICITY_WAIT}
-    Click Element    ${label_politica}
+    Click Element    //div[@class="input-box-policy"]/child::app-input-box[1]/div
     Input Text    ${input_politica}    ${politica}
     Wait Until Element Is Enabled    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
     Click Element    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]

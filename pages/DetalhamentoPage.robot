@@ -14,6 +14,7 @@ Dado ter selecionado um periodo para consultar
 
 E selecionado o primeiro registro retornado
     Selecionar primeiro registro da consulta
+    Retornar codigo da operacao selecionado
 
 E acionado o botão submeter proposta
     Wait Until Element Is Enabled    ${btn_submeter_proposta}    ${IMPLICITY_WAIT}
@@ -284,3 +285,20 @@ Então os botões "Primeira página" e "Voltar página" ficarão habilitados
 Então informações de IP de Origem e IP de servidor não devem ser exibidas
     Page Should Not Contain    IP de origem
     Page Should Not Contain    IP de servidor
+
+E clicar em ressubmeter
+    Wait Until Element Is Visible    ${detalhamento_button_ressubmeter}
+    Click Element    ${detalhamento_button_ressubmeter}
+
+E informar a politica
+    [Arguments]    ${politica}    ${chave}
+
+    Wait Until Element Is Enabled    ${label_politica}    ${IMPLICITY_WAIT}
+    Wait Until Element Is Enabled    //*[@id="mat-checkbox-24"]    ${IMPLICITY_WAIT}
+    Click Element    ${label_politica}
+    Input Text    ${input_politica}    ${politica}
+    Wait Until Element Is Enabled    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
+    Click Element    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
+
+    Click Element    ${input_chave}
+    Click Element    //p[text()="${chave}"]

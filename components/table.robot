@@ -10,3 +10,6 @@ Selecionar primeiro registro da consulta
     Click Element    ${checkbox_primeiro_registro}
 
 
+Retornar codigo da operacao selecionado
+    ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[3]/span
+    Set Suite Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}

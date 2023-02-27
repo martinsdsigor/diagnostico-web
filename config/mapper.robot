@@ -29,4 +29,5 @@ Resource    ../components/table.robot
 Resource    ../pages/LoginPage.robot
 Resource    ../pages/DetalhamentoPage.robot
 Resource    ../pages/SubmissionPage.robot
+Resource    ../pages/ResubmissionPage.robot
 Resource    ../pages/GraficoPage.robot

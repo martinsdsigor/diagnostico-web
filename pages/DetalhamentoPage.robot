@@ -82,6 +82,8 @@ E informar um período
     [Arguments]    ${Data Inicial}    ${Data Final}=${None}
     Informar Período por data    ${Data Inicial}    ${Data Final}
     Acionar Consultar
+    Set Test Variable    ${Data Inicial}
+    Set Test Variable    ${Data Final}
 
 E quando acionar os 3 pontos ao final da primeira proposta
     Wait Until Element Is Visible    ${detalhamento_table_last_td_element}
@@ -263,6 +265,7 @@ Então a quantidade de propostas deve ser igual a
     [Arguments]    ${quantidade}
     Wait Until Element Is Visible
     ...    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
+    Sleep    500ms
     Scroll Element Into View    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
     ${valor}    SeleniumLibrary.Get Text
     ...    xpath://div[@class='mat-paginator-range-label' and contains(text(), '${quantidade}')]
@@ -286,6 +289,7 @@ Então informações de IP de Origem e IP de servidor não devem ser exibidas
     Page Should Not Contain    IP de origem
     Page Should Not Contain    IP de servidor
 
+
 E clicar em ressubmeter
     Wait Until Element Is Visible    ${detalhamento_button_ressubmeter}
     Click Element    ${detalhamento_button_ressubmeter}
@@ -302,3 +306,11 @@ E informar a politica
 
     Click Element    ${input_chave}
     Click Element    //p[text()="${chave}"]
+
+Então o sistema retornará dados relacionados a busca equivalente ao mesmo período
+    ${cells}    SeleniumLibrary.Get Element Count    xpath://table/tbody/tr
+    FOR    ${counter}    IN RANGE    1    ${cells}
+        ${current}    Get Text    xpath://table/tbody/tr[${counter}]/td[5]
+        Should Contain    ${current}    ${Data Inicial}
+    END
+

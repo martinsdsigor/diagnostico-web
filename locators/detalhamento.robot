@@ -28,3 +28,6 @@ ${detalhamento_button_primeira_pagina}           xpath://button[@aria-label='Pri
 ${detalhamento_select_paginacao}                 xpath://mat-select[@aria-label='Itens por página']
 ${detalhamento_button_ressubmeter}               xpath://span[text()='RESSUBMETER']/parent::button
 ${detalhamento_button_painel}                    xpath://span[text()='PAINEL']/parent::button
+${detalhamento_button_exportar_resultados}       //span[text()='EXPORTAR RESULTADOS']/parent::button
+${detalhamento_thead_tabela}                     //table/thead/tr
+${detalhamento_tbody_tabela}                     //table/tbody/tr

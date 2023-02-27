@@ -58,6 +58,7 @@ Quando informar a quantidade de propostas
     Click Element    ${detalhamento_select_paginacao}
     Wait Until Element Is Visible    xpath://mat-option[@role='option']/span[text()=' ${quantidade} ']
     Click Element    xpath://mat-option[@role='option']/span[text()=' ${quantidade} ']
+    Wait Until Page Contains Element    ${detalhamento_tbody_tabela}    limit=${quantidade}    timeout=30s
 
 Quando acionar o checkbox do registro
     [Arguments]    @{linha}
@@ -293,4 +294,34 @@ Então o sistema retornará dados relacionados a busca equivalente ao mesmo per�
     FOR    ${counter}    IN RANGE    1    ${cells}
         ${current}    Get Text    xpath://table/tbody/tr[${counter}]/td[5]
         Should Contain    ${current}    ${Data Inicial}
+    END
+
+E acionar EXPORTAR RESULTADOS
+    Wait Until Element Is Visible    ${detalhamento_button_exportar_resultados}    timeout=20s
+    Wait Until Element Is Enabled    ${detalhamento_button_exportar_resultados}    timeout=30s
+    Click Button    ${detalhamento_button_exportar_resultados}
+
+Então os dados exportados para o arquivo CSV devem corresponder aos registros da tabela
+    ${quantidade_registros}     SeleniumLibrary.Get Element Count    ${detalhamento_table_resultados}
+    ${caminho_arquivo_csv}    Join Path    ${EXECDIR}    files    downloads    listaDePropostas.csv
+    Wait Until Created    ${caminho_arquivo_csv}
+    ${arquivo_csv_em_texto}     Get File    ${caminho_arquivo_csv}
+    ${separa_conteudo_em_array}    Split To Lines    ${arquivo_csv_em_texto}
+
+    FOR    ${linha}    IN RANGE    1    ${quantidade_registros+1}    1
+        Scroll Element Into View    //table/tbody/tr[${linha}]/td[2]
+        FOR    ${coluna}    IN RANGE    2    9    1
+            ${conteudo_coluna}    Get Text    //table/tbody/tr[${linha}]/td[${coluna}]
+
+            IF    ${coluna} == ${5}
+                 ${data_hora}    Get Text    //table/tbody/tr[${linha}]/td[${coluna}]
+                 ${remove_bolinha_data_hora}    Replace String    ${data_hora}    ${SPACE}•    ${EMPTY}
+                 ${troca_barra_por_hifen}   Replace String    ${remove_bolinha_data_hora}    /    -
+                 Should Contain    ${arquivo_csv_em_texto}    ${troca_barra_por_hifen}
+
+                 CONTINUE
+            END
+
+            Should Contain    ${arquivo_csv_em_texto}    ${conteudo_coluna}
+        END
     END

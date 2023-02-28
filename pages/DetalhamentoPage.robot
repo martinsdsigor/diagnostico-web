@@ -306,7 +306,6 @@ Então os dados exportados para o arquivo CSV devem corresponder aos registros d
     ${caminho_arquivo_csv}    Join Path    ${EXECDIR}    files    downloads    listaDePropostas.csv
     Wait Until Created    ${caminho_arquivo_csv}
     ${arquivo_csv_em_texto}     Get File    ${caminho_arquivo_csv}
-    ${separa_conteudo_em_array}    Split To Lines    ${arquivo_csv_em_texto}
 
     FOR    ${linha}    IN RANGE    1    ${quantidade_registros+1}    1
         Scroll Element Into View    //table/tbody/tr[${linha}]/td[2]
@@ -325,3 +324,89 @@ Então os dados exportados para o arquivo CSV devem corresponder aos registros d
             Should Contain    ${arquivo_csv_em_texto}    ${conteudo_coluna}
         END
     END
+
+E selecionar um registro
+    ${registros}    SeleniumLibrary.Get Element Count    ${detalhamento_tbody_tabela}
+    ${numero_aleatorio}    Evaluate    random.randint(1, ${registros})    random
+    Scroll Element Into View    //table/tbody/tr[${numero_aleatorio}]/td[2]
+    Click Element    //table/tbody/tr[${numero_aleatorio}]/td[2]
+
+E acionar a aba 'Variáveis'
+    Wait Until Element Is Visible    ${detalhamento_div_aba_variaveis}
+    Wait Until Element Is Enabled    ${detalhamento_div_aba_variaveis}
+    Click Element    ${detalhamento_div_aba_variaveis}
+
+E acionar 'Salvar variáveis'
+    Wait Until Element Is Visible    ${detalhamento_button_salvar_variaveis}
+    Wait Until Element Is Enabled    ${detalhamento_button_salvar_variaveis}
+    Click Button    ${detalhamento_button_salvar_variaveis}
+
+Então as informações do registro devem ser exportadas para um arquivo csv
+    [Arguments]    ${nome_arquivo}
+    [Documentation]     Este trecho de código coleta e processa informações sobre variáveis dentro de uma determinada aba.
+    ...                 Ele segue os seguintes passos:
+    ...                 1. Identifica a quantidade de resultados dentro da aba de variáveis.
+    ...                 2. Percorre todos os resultados
+    ...                 3. Compara os resultados encontrados na interface com os resultados dentro do arquivo csv
+
+    Verificar se download foi concluído    ${nome_arquivo}
+    ${caminho}  Join Path    files  downloads   ${nome_arquivo}
+    ${csv}  Get File    ${caminho}
+
+    ${qtd_variaveis}    SeleniumLibrary.Get Element Count    //app-trace-details-variables/div/div/table/tbody/tr
+    FOR    ${linha}    IN RANGE    1    ${qtd_variaveis+1}
+        Scroll Element Into View    //app-trace-details-variables/div/div/table/tbody/tr[${linha}]/td[1]
+        FOR    ${coluna}    IN RANGE    1    3
+            ${conteudo_linha_coluna}    Get Text    //app-trace-details-variables/div/div/table/tbody/tr[${linha}]/td[${coluna}]
+            Should Contain    ${csv}    ${conteudo_linha_coluna}
+        END
+    END
+
+E informar uma variável
+    [Arguments]    ${variavel}
+    Input Text    ${detalhamento_input_variaveis}    ${variavel}
+
+E acionar a aba 'Outras informações'
+    Wait Until Element Is Visible    ${detalhamento_div_outras_informacoes}
+    Wait Until Element Is Enabled    ${detalhamento_div_outras_informacoes}
+    Click Element    ${detalhamento_div_outras_informacoes}
+
+Então o sistema exibirá as informações do registro de IP de origem e IP de servidor
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    IP de origem
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    IP de servidor
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Início
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Processamento
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Final
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Duração
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Versão da política
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Mensagem
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Filial
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Usuário
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Versão TXT
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Versão XML
+
+Então o sistema não deverá exibir as informações do registro de IP de origem e IP de servidor
+    Element Should Not Contain    ${detalhamento_trace_outras_informacoes}    IP de origem
+    Element Should Not Contain    ${detalhamento_trace_outras_informacoes}    IP de servidor
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Início
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Processamento
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Final
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Duração
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Versão da política
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Mensagem
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Filial
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Usuário
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Versão TXT
+    Element Should Contain    ${detalhamento_trace_outras_informacoes}    Versão XML
+
+Então o sistema deverá exibir a lista de variáveis em branco
+    ${registros}    SeleniumLibrary.Get Element Count    ${detalhamento_table_detalhes_variaveis}
+    Should Be Equal As Integers    ${registros}    ${0}
+
+E informar um novo período
+    [Arguments]    ${periodo}
+    E informar um período    ${periodo}
+
+Então o sistema deverá limpar as informações do quadro de Detalhe do registro
+    Element Should Be Visible    ${detalhamento_trace_background_message}
+    Page Should Not Contain Element    ${detalhamento_trace_outras_informacoes}

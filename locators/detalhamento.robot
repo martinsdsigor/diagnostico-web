@@ -28,3 +28,13 @@ ${detalhamento_button_primeira_pagina}           xpath://button[@aria-label='Pri
 ${detalhamento_select_paginacao}                 xpath://mat-select[@aria-label='Itens por página']
 ${detalhamento_button_ressubmeter}               xpath://span[text()='RESSUBMETER']/parent::button
 ${detalhamento_button_painel}                    xpath://span[text()='PAINEL']/parent::button
+${detalhamento_button_exportar_resultados}       //span[text()='EXPORTAR RESULTADOS']/parent::button
+${detalhamento_thead_tabela}                     //table/thead/tr
+${detalhamento_tbody_tabela}                     //table/tbody/tr
+${detalhamento_div_aba_variaveis}                //div[text()='Variáveis']/parent::div
+${detalhamento_div_outras_informacoes}           //div[text()='Outras informações']/parent::div
+${detalhamento_button_salvar_variaveis}          //span[text()='SALVAR VARIÁVEIS']/parent::button
+${detalhamento_input_variaveis}                  //app-trace-details//div[@class='input-container']/input
+${detalhamento_trace_outras_informacoes}         //app-trace-details-more-info/div
+${detalhamento_table_detalhes_variaveis}         //app-trace-details-variables//table/tbody/tr
+${detalhamento_trace_background_message}         //app-trace-details//mat-tab-body/div/div/app-background-message//span[.=' Selecione uma linha para exibir informações aqui. ']

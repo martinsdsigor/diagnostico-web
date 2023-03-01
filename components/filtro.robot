@@ -24,7 +24,7 @@ Informar Contratante
     END
 
 Informar Período por data
-    [Arguments]    ${Data_Inicial}    ${Data_Final}=${None}
+    [Arguments]    ${Data_Inicial}    ${Data_Final}=${None}    ${hora_inicio}=${None}    ${hora_fim}=${None}
     @{start_date_splitted}    Split String    ${Data_Inicial}    separator=/
 
     Click Element    ${filtro_periodo}
@@ -35,12 +35,16 @@ Informar Período por data
     Informar ano    ${start_date_splitted}[2]
     Informar mês    ${Data_Inicial}
     Informar dia    ${start_date_splitted}[0]
+    Informar Hora Inicial    ${hora_inicio}
+    Informar Hora Fim    ${hora_fim}
 
     IF    '${Data_Final}' != '${None}'
         @{end_date_splitted}    Split String    ${Data_Final}    separator=/
         Informar ano    ${end_date_splitted}[2]
         Informar mês    ${Data_Final}
         Informar dia    ${end_date_splitted}[0]
+        Informar Hora Inicial    ${hora_inicio}
+        Informar Hora Fim    ${hora_fim}
         Acionar Definir
     ELSE
         Acionar Definir

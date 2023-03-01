@@ -15,7 +15,6 @@ Quando selecionar um periodo para consultar
     Informar Período por data    11/01/2023
     Acionar Consultar
 
-
 Quando selecionar o tipo de grafico para download
     [Arguments]    ${grafico}
 
@@ -23,10 +22,9 @@ Quando selecionar o tipo de grafico para download
     Click Element    ${tipo_de_grafico}
     Sleep    1s
     Click Element    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]
-    
+
     Click Element    //button[text()="ADICIONAR"]
     Click Element    ${btn_download}
-
 
 Então o arquivo com o nome do gráfico é salvo com sucesso
     [Arguments]    ${arquivo}
@@ -37,7 +35,6 @@ Então o arquivo com o nome do gráfico é salvo com sucesso
 
     List Should Contain Value    ${arquivos_no_diretorio}    ${arquivo}
 
-
 Então é exibido na lista o gráfico
     [Arguments]    ${grafico}
 
@@ -47,7 +44,6 @@ Então é exibido na lista o gráfico
     Scroll Element Into View    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]
     Element Should Be Visible    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]
 
-
 Então não é exibido na lista o gráfico
     [Arguments]    ${grafico}
 
@@ -56,3 +52,22 @@ Então não é exibido na lista o gráfico
     Sleep    1s
     # Scroll Element Into View    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]
     Element Should Not Be Visible    //div[@role="listbox"]/child::mat-option/span[text()="${grafico}"]
+
+Dado que esteja na tela inicial de Gráficos
+    Acionar Gráficos
+
+E informar o tipo de gráfico
+    [Arguments]    ${tipo}
+    Wait Until Element Is Enabled    ${tipo_de_grafico}
+    Click Element    ${tipo_de_grafico}
+    Wait Until Element Is Visible    //mat-option[.='${tipo}']
+    Scroll Element Into View    //mat-option[.='${tipo}']
+    Click Element    //mat-option[.='${tipo}']
+    Click Button    ${graficos_btn_adicionar}
+
+Então o sistema exibirá o gráfico para o tipo
+    [Arguments]    ${tipo}
+    Wait Until Element Is Visible    //mat-card/mat-card-header//mat-card-title[text()=' ${tipo} ']
+    Element Should Be Visible    //mat-card/mat-card-header//mat-card-title[text()=' ${tipo} ']
+    Wait Until Page Contains Element    ${graficos_svg_content}    timeout=30s
+    Page Should Contain Element    ${graficos_svg_content}

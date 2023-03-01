@@ -1,7 +1,7 @@
 *** Settings ***
-Documentation    [WKF] Diagnostico > Detalhamento > Detalhes do registro
+Documentation       [WKF] Diagnostico > Detalhamento > Detalhes do registro
 
-Resource    ../../config/mapper.robot
+Resource            ../../config/mapper.robot
 
 Test Setup          Usuario loga e acessa o produto
 Test Teardown       Evidenciar teste na pasta    DIAG-1666

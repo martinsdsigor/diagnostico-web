@@ -31,6 +31,43 @@ Informar dia
     ...    class
     Should Contain    ${class}    selected
 
+Informar Hora Inicial
+    [Arguments]    ${hora_inicio}=${None}
+    IF    '${hora_inicio}' != '${None}'
+        ${separa_hora_minuto_segundo}=    Split String    ${hora_inicio}    :
+        Clear Element Text    //span[text()='Hour']/preceding-sibling::input
+        Input Text    //span[text()='Hour']/preceding-sibling::input    ${separa_hora_minuto_segundo}[0]
+        Press Keys    //span[text()='Hour']/preceding-sibling::input    RETURN
+
+        Clear Element Text    //span[text()='Minute']/preceding-sibling::input
+        Input Text    //span[text()='Minute']/preceding-sibling::input    ${separa_hora_minuto_segundo}[1]
+        Press Keys    //span[text()='Minute']/preceding-sibling::input    RETURN
+
+        Clear Element Text    //span[text()='Second']/preceding-sibling::input
+        Input Text    //span[text()='Second']/preceding-sibling::input    ${separa_hora_minuto_segundo}[2]
+        Press Keys    //span[text()='Second']/preceding-sibling::input    RETURN
+    END
+
+Informar Hora Fim
+    [Arguments]    ${hora_fim}=${None}
+    IF    '${hora_fim}' != '${None}'
+        Wait Until Element Is Visible    //span[text()='Fim:']/parent::span
+        Wait Until Element Is Enabled    //span[text()='Fim:']/parent::span
+        Click Element    //span[text()='Fim:']/parent::span
+        ${separa_hora_minuto_segundo}=    Split String    ${hora_fim}    :
+        Clear Element Text    //span[text()='Hour']/preceding-sibling::input
+        Input Text    //span[text()='Hour']/preceding-sibling::input    ${separa_hora_minuto_segundo}[0]
+        Press Keys    //span[text()='Hour']/preceding-sibling::input    RETURN
+
+        Clear Element Text    //span[text()='Minute']/preceding-sibling::input
+        Input Text    //span[text()='Minute']/preceding-sibling::input    ${separa_hora_minuto_segundo}[1]
+        Press Keys    //span[text()='Minute']/preceding-sibling::input    RETURN
+
+        Clear Element Text    //span[text()='Second']/preceding-sibling::input
+        Input Text    //span[text()='Second']/preceding-sibling::input    ${separa_hora_minuto_segundo}[2]
+        Press Keys    //span[text()='Second']/preceding-sibling::input    RETURN
+    END
+
 Acionar Definir
     Wait Until Element Is Visible    ${calendar_button_definir}    ${IMPLICITY_WAIT}
     Click Element    ${calendar_button_definir}

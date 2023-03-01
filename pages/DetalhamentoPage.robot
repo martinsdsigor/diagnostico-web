@@ -80,8 +80,8 @@ Quando acionar "Painel"
     Click Button    ${detalhamento_button_painel}
 
 E informar um período
-    [Arguments]    ${Data Inicial}    ${Data Final}=${None}
-    Informar Período por data    ${Data Inicial}    ${Data Final}
+    [Arguments]    ${Data Inicial}    ${Data Final}=${None}    ${hora_inicio}=${None}    ${hora_fim}=${None}
+    Informar Período por data    ${Data Inicial}    ${Data Final}    ${hora_inicio}    ${hora_fim}
     Acionar Consultar
     Set Test Variable    ${Data Inicial}
     Set Test Variable    ${Data Final}
@@ -157,14 +157,15 @@ Então os resultados devem ser filtrados de acordo com o período
     ${quantidade_resultados}    SeleniumLibrary.Get Element Count    ${detalhamento_table_resultados}
     Should Not Be Equal As Integers    ${quantidade_resultados}    ${0}
 
-    ${infracommerce_date_column_visible}    Run Keyword And Return Status    Element Should Be Visible    ${home_conta_infracommerce}
+    ${infracommerce_date_column_visible}    Run Keyword And Return Status
+    ...    Element Should Be Visible
+    ...    ${home_conta_infracommerce}
 
     IF    ${infracommerce_date_column_visible}
-         ${infracommerce_date_column}   Get Text    ${detalhamento_table_resultados}/td[5]/span
-         Should Contain    ${infracommerce_date_column}    ${Período}
-         ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[2]/span
-         Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
-
+        ${infracommerce_date_column}    Get Text    ${detalhamento_table_resultados}/td[5]/span
+        Should Contain    ${infracommerce_date_column}    ${Período}
+        ${cod_ope_table_value}    Get Text    ${detalhamento_table_resultados}/td[2]/span
+        Set Test Variable    ${detalhamento_cod_operacao}    ${cod_ope_table_value}
     ELSE
         ${neurotech_date_column}    Get Text    ${detalhamento_table_resultados}/td[5]/span
         Should Contain    ${neurotech_date_column}    ${Período}
@@ -299,7 +300,8 @@ E informar a politica
     Wait Until Element Is Enabled    //*[@id="mat-checkbox-24"]    ${IMPLICITY_WAIT}
     Click Element    ${label_politica}
     Input Text    ${input_politica}    ${politica}
-    Wait Until Element Is Enabled    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
+    Wait Until Element Is Enabled
+    ...    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
     Click Element    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
 
     Click Element    ${input_chave}
@@ -318,10 +320,10 @@ E acionar EXPORTAR RESULTADOS
     Click Button    ${detalhamento_button_exportar_resultados}
 
 Então os dados exportados para o arquivo CSV devem corresponder aos registros da tabela
-    ${quantidade_registros}     SeleniumLibrary.Get Element Count    ${detalhamento_table_resultados}
+    ${quantidade_registros}    SeleniumLibrary.Get Element Count    ${detalhamento_table_resultados}
     ${caminho_arquivo_csv}    Join Path    ${EXECDIR}    files    downloads    listaDePropostas.csv
     Wait Until Created    ${caminho_arquivo_csv}
-    ${arquivo_csv_em_texto}     Get File    ${caminho_arquivo_csv}
+    ${arquivo_csv_em_texto}    Get File    ${caminho_arquivo_csv}
 
     FOR    ${linha}    IN RANGE    1    ${quantidade_registros+1}    1
         Scroll Element Into View    //table/tbody/tr[${linha}]/td[2]
@@ -329,12 +331,12 @@ Então os dados exportados para o arquivo CSV devem corresponder aos registros d
             ${conteudo_coluna}    Get Text    //table/tbody/tr[${linha}]/td[${coluna}]
 
             IF    ${coluna} == ${5}
-                 ${data_hora}    Get Text    //table/tbody/tr[${linha}]/td[${coluna}]
-                 ${remove_bolinha_data_hora}    Replace String    ${data_hora}    ${SPACE}•    ${EMPTY}
-                 ${troca_barra_por_hifen}   Replace String    ${remove_bolinha_data_hora}    /    -
-                 Should Contain    ${arquivo_csv_em_texto}    ${troca_barra_por_hifen}
+                ${data_hora}    Get Text    //table/tbody/tr[${linha}]/td[${coluna}]
+                ${remove_bolinha_data_hora}    Replace String    ${data_hora}    ${SPACE}•    ${EMPTY}
+                ${troca_barra_por_hifen}    Replace String    ${remove_bolinha_data_hora}    /    -
+                Should Contain    ${arquivo_csv_em_texto}    ${troca_barra_por_hifen}
 
-                 CONTINUE
+                CONTINUE
             END
 
             Should Contain    ${arquivo_csv_em_texto}    ${conteudo_coluna}
@@ -358,22 +360,23 @@ E acionar 'Salvar variáveis'
     Click Button    ${detalhamento_button_salvar_variaveis}
 
 Então as informações do registro devem ser exportadas para um arquivo csv
+    [Documentation]    Este trecho de código coleta e processa informações sobre variáveis dentro de uma determinada aba.
+    ...    Ele segue os seguintes passos:
+    ...    1. Identifica a quantidade de resultados dentro da aba de variáveis.
+    ...    2. Percorre todos os resultados
+    ...    3. Compara os resultados encontrados na interface com os resultados dentro do arquivo csv
     [Arguments]    ${nome_arquivo}
-    [Documentation]     Este trecho de código coleta e processa informações sobre variáveis dentro de uma determinada aba.
-    ...                 Ele segue os seguintes passos:
-    ...                 1. Identifica a quantidade de resultados dentro da aba de variáveis.
-    ...                 2. Percorre todos os resultados
-    ...                 3. Compara os resultados encontrados na interface com os resultados dentro do arquivo csv
 
     Verificar se download foi concluído    ${nome_arquivo}
-    ${caminho}  Join Path    files  downloads   ${nome_arquivo}
-    ${csv}  Get File    ${caminho}
+    ${caminho}    Join Path    files    downloads    ${nome_arquivo}
+    ${csv}    Get File    ${caminho}
 
     ${qtd_variaveis}    SeleniumLibrary.Get Element Count    //app-trace-details-variables/div/div/table/tbody/tr
     FOR    ${linha}    IN RANGE    1    ${qtd_variaveis+1}
         Scroll Element Into View    //app-trace-details-variables/div/div/table/tbody/tr[${linha}]/td[1]
         FOR    ${coluna}    IN RANGE    1    3
-            ${conteudo_linha_coluna}    Get Text    //app-trace-details-variables/div/div/table/tbody/tr[${linha}]/td[${coluna}]
+            ${conteudo_linha_coluna}    Get Text
+            ...    //app-trace-details-variables/div/div/table/tbody/tr[${linha}]/td[${coluna}]
             Should Contain    ${csv}    ${conteudo_linha_coluna}
         END
     END

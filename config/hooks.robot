@@ -5,12 +5,13 @@ Resource    ../pages/HomePage.robot
 
 *** Keywords ***
 Usuario loga e acessa o produto
-
     ${download_directory}    Join Path    ${EXECDIR}    files    downloads
     ${prefs}    Create Dictionary    download.default_directory=${download_directory}
-    # ${prefs}    Create Dictionary    download.default_directory=${EXECDIR}/files/downloads
 
-    Open Browser    ${BASE_URL}    ${BROWSER}    options=add_experimental_option("prefs",${prefs});add_experimental_option("excludeSwitches", ["enable-logging"])
+    Open Browser
+    ...    ${BASE_URL}
+    ...    ${BROWSER}
+    ...    options=add_experimental_option("prefs",${prefs});add_experimental_option("excludeSwitches", ["enable-logging"])
     Maximize Browser Window
     Set Selenium Implicit Wait    ${IMPLICITY_WAIT}
     Informar as credenciais de acesso    ${USERNAME}    ${PASSWORD}
@@ -20,7 +21,6 @@ Usuario loga e acessa o produto
 
 Evidenciar teste na pasta
     [Arguments]    ${folder}
-
 
     ${full_directory}    Convert To String    ${SCREENSHOT_OUTPUTDIR}/${folder}
     Create Directory    ${full_directory}
@@ -41,7 +41,6 @@ Evidenciar teste na pasta
     END
 
     # Close Browser
-
     Close All Browsers
 
     Organizar arquivos de log    deletar    csv
@@ -49,7 +48,6 @@ Evidenciar teste na pasta
 
 Organizar arquivos de log
     [Arguments]    ${action}    ${file_extension}    ${folder}=${None}    ${directory}=${EXECDIR}//files//downloads
-
 
     ${directory_list}    List Files In Directory    ${directory}    *.${file_extension}
 
@@ -79,7 +77,7 @@ Retornar para aba
 
 Verificar se download foi concluído
     [Arguments]    ${filename}=${None}
-    ${caminho_arquivo}   Join Path    ${EXECDIR}    files   downloads
+    ${caminho_arquivo}    Join Path    ${EXECDIR}    files    downloads
     Wait Until Created    ${caminho_arquivo}/${filename}    timeout=10s
     ${file}    Get File Size    ${EXECDIR}/files/downloads/${filename}
     Should Not Be Equal As Integers    ${file}    ${0}
@@ -96,12 +94,11 @@ Trocar para conta
     Wait Until Element Is Visible    //div[@class="content-options"]/p[1]
     Click Element    //div[@class="content-options"]/p[1]
 
-
 Dado ter selecionado a conta
     [Arguments]    ${conta}
     Trocar para conta    ${conta}
-    ${visivel}  Run Keyword And Return Status    Element Should Be Visible    ${home_button_termo_aceite}
-    Run Keyword If    ${visivel}    Click Button    ${home_button_termo_aceite}
+    ${visivel}    Run Keyword And Return Status    Element Should Be Visible    ${home_button_termo_aceite}
+    IF    ${visivel}    Click Button    ${home_button_termo_aceite}
     Sleep    1s
     Acionar Diagnostico Workflow
     Trocar para aba    Diagnóstico Workflow

@@ -1,7 +1,7 @@
 *** Settings ***
-Documentation    [WKF] Diagnóstico > Detalhamento > Exportar resultado
+Documentation       [WKF] Diagnóstico > Detalhamento > Exportar resultado
 
-Resource    ../../config/mapper.robot
+Resource            ../../config/mapper.robot
 
 Test Setup          Usuario loga e acessa o produto
 Test Teardown       Evidenciar teste na pasta    DIAG-1643

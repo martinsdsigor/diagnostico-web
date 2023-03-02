@@ -5,6 +5,10 @@ Resource    ../pages/HomePage.robot
 
 *** Keywords ***
 Usuario loga e acessa o produto
+    # Cria a pasta downloads para evitar que testes falhem.
+    ${download_outputdir}  Join Path    ${EXECDIR}    files    downloads
+    Create Directory    ${download_outputdir}
+    # Adiciona todos os downloads de arquivos no caminho files/downloads
     ${download_directory}    Join Path    ${EXECDIR}    files    downloads
     ${prefs}    Create Dictionary    download.default_directory=${download_directory}
 

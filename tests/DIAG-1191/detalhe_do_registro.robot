@@ -9,7 +9,7 @@ Test Teardown       Evidenciar teste na pasta    DIAG-1191
 
 *** Test Cases ***
 Detalhamento do Teste: Relatório de cobertura
-    [Tags]    DIAG-1046
+    [Tags]    diag-1046
     Dado que esteja na tela inicial Submissão
     Quando acionar Filtros
     E informar um período    13/02/2023
@@ -18,7 +18,7 @@ Detalhamento do Teste: Relatório de cobertura
     Então o sistema exibirá relatório de cobertura da submissão
 
 Detalhamento do Teste: Gráficos
-    [Tags]    DIAG-1045
+    [Tags]    diag-1045
     Dado que esteja na tela inicial Submissão
     Quando acionar Filtros
     E informar um período    1/02/2022    1/02/2023
@@ -28,7 +28,7 @@ Detalhamento do Teste: Gráficos
     Então o sistema deve exibir os gráficos e dados da duração do teste
 
 Exportar Relatório de cobertura do teste de submissão
-    [Tags]    DIAG-1761
+    [Tags]    diag-1761
     Dado que esteja na tela inicial Submissão
     Quando acionar Filtros
     E informar um período    1/02/2022    1/02/2023
@@ -38,7 +38,7 @@ Exportar Relatório de cobertura do teste de submissão
     Então o sistema deve iniciar o download do arquivo
 
 Exportar Gráficos do teste de submissão
-    [Tags]    DIAG-1762
+    [Tags]    diag-1762
     Dado que esteja na tela inicial Submissão
     Quando acionar Filtros
     E informar um período    1/02/2022    1/02/2023
@@ -47,3 +47,4 @@ Exportar Gráficos do teste de submissão
     Quando acionar "Gráficos" no menu lateral
     E acionar "Exportar Relatório"
     Então o sistema deve iniciar o download do arquivo
+    E o sistema deve exibir os gráficos e dados da duração do teste

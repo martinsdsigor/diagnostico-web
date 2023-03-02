@@ -7,4 +7,4 @@ ${LOG_OUTPUTDIR}            logs
 ${SKIP_FEEDBACK}            true
 
 ${USERNAME}                 igor.santos@ilabqa.com
-${PASSWORD}                 
+${PASSWORD}

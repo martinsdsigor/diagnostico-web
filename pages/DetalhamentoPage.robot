@@ -197,7 +197,7 @@ Então sou redirecionado para uma nova aba contendo as informações gerais da p
     Page Should Contain    IP de servidor
 
 Então o download de um csv contendo as variáveis deve ser concluído
-    Verificar se download foi concluído    Variaveis.csv
+    hooks.Verificar se download foi concluído    Variaveis.csv
     ${file}    Get File    ${EXECDIR}/files/downloads/Variaveis.csv
 
     ${variavel}    Get Text    ${detalhamento_primeira_variavel}

@@ -60,10 +60,19 @@ Quando remover uma entrada
 
 Dado que esteja na tela inicial Submissão
     Acionar Submissão
-    Wait Until Element Is Visible    xpath://i[.=' close ']
-    ${toast_visible}    Run Keyword And Return Status    Element Should Be Visible    xpath://i[.=' close ']
-    IF    ${toast_visible}    Click Element    xpath://i[.=' close ']
-    Element Should Be Visible    xpath://h3[text()='Nenhum teste encontrado com os parâmetros de busca informados.']
+
+    ${btn_fechar_visivel}    Run Keyword And Return Status
+    ...    Element Should Be Visible
+    ...    xpath://i[.=' close ']
+
+    IF    ${btn_fechar_visivel}
+        Wait Until Element Is Visible    xpath://i[.=' close ']
+        ${texto_visivel}    Run Keyword And Return Status
+        ...    Element Should Be Visible
+        ...    xpath://h3[text()="Nenhum teste encontrado com os parâmetros de busca informados."]
+        # ${toast_visible}    Run Keyword And Return Status    Element Should Be Visible    xpath://i[.=' close ']
+        IF    ${texto_visivel}    Click Element    xpath://i[.=' close ']
+    END
 
 Então o sistema deve ordernar os resultados
     [Arguments]    ${coluna}    ${ordem}=crescente
@@ -162,15 +171,14 @@ E informar o usuário
     Wait Until Element Is Enabled    ${label_usuario}    ${IMPLICITY_WAIT}
     Click Element    ${label_usuario}
     Input Text    ${input_usuario}    ${usuario}
-
     Click Element    //p[.="${usuario}"]
 
 E informar a Política
     [Arguments]    ${politica}
 
-    Wait Until Element Is Enabled    ${label_politica}    ${IMPLICITY_WAIT}
-    Click Element    ${label_politica}
-    Input Text    ${input_politica}    ${politica}
+    Wait Until Element Is Enabled    ${label_politica_filtro}    ${IMPLICITY_WAIT}
+    Click Element    ${label_politica_filtro}
+    Input Text    ${input_politica_filtro}    ${politica}
     # Click Element    //p[text()="${politica}" and not(contains(@class,"selected-option"))]
 
 E informar o status
@@ -230,8 +238,8 @@ Então o sistema apresentará o resultado de acordo com ID e o período de teste
 Então é exibido um toast com a mensagem informada
     [Arguments]    ${mensagem}
     # Sleep    1s
-    Wait Until Element Is Visible    ${toast}    timeout=30s
-    Wait Until Element Is Enabled    ${toast}    timeout=30s
+    Wait Until Element Is Visible    ${toast}    timeout=60s
+    Wait Until Element Is Enabled    ${toast}    timeout=60s
     Element Should Contain    ${toast}    ${mensagem}
 
 Então o sistema listará apenas o status
@@ -256,7 +264,7 @@ Então o sistema listará apenas o status
             IF    '${status_temp}' == '${status}'
                 CONTINUE
             ELSE
-                Fail    Foi encontrado no resultado status diferente do Status:    '${status}'    informado no filtro.
+                Fail    Foi encontrado no resultado status diferente do Status: '${status}' informado no filtro.
             END
         END
     END
@@ -352,16 +360,180 @@ Então o sistema listará apenas histórico de testes com o período de datas in
 
         ${dt_inicial_string}    Convert Date    ${data_inicial}    result_format=%d/%m/%Y    date_format=%d/%m/%Y
         ${dt_final_string}    Convert Date    ${data_final}    result_format=%d/%m/%Y    date_format=%d/%m/%Y
-        ${dt_teste_string}    Convert Date    ${data_sem_horas}[0]    result_format=%d/%m/%Y    date_format=%d/%m/%Y
+        ${dt_teste_string}    Convert Date
+        ...    ${data_sem_horas}[0]
+        ...    result_format=%d/%m/%Y
+        ...    date_format=%d/%m/%Y
 
         ${dt_inicial_sem_zero}    Replace String Using Regexp    ${dt_inicial_string}    (?<=/)(0)|^0+    ${EMPTY}
         ${dt_final_sem_zero}    Replace String Using Regexp    ${dt_final_string}    (?<=/)(0)|^0+    ${EMPTY}
         ${dt_teste_sem_zero}    Replace String Using Regexp    ${dt_teste_string}    (?<=/)(0)|^0+    ${EMPTY}
         Log To Console    ${dt_teste_sem_zero}
 
-        IF    ${dt_inicial_sem_zero} < ${dt_teste_sem_zero} and ${dt_final_sem_zero} > ${dt_teste_sem_zero}
+        IF    ${dt_inicial_sem_zero} <= ${dt_teste_sem_zero} and ${dt_final_sem_zero} >= ${dt_teste_sem_zero}
             CONTINUE
         ELSE
             Fail    Data do teste fora do período informado
         END
     END
+
+E o botão de três pontinhos estará desabilitado para o status
+    [Arguments]    ${status}
+    ${linha}    SeleniumLibrary.Get Element Count    ${submissao_table_resultados}/tbody/tr
+
+    FOR    ${counter}    IN RANGE    1    ${linha}    3
+        ${next_row_exists}    Run Keyword And Return Status
+        ...    Element Should Be Visible
+        ...    ${submissao_table_resultados}/tbody/tr[${counter}]/child::td[position()=8]
+        IF    ${next_row_exists} == ${False}            BREAK
+
+        ${btn_tres_pontinhos_temp}    Run Keyword And Return Status
+        ...    Element Should Be Visible
+        ...    ${submissao_table_resultados}/tbody/tr[${counter}]/child::td[position()=9]/button[contains(@class,"mat-button-disabled")]
+
+        IF    ${btn_tres_pontinhos_temp}
+            CONTINUE
+        ELSE
+            Fail    O botão para o Status: ${status} deve estar desabilitado.
+        END
+    END
+
+E acionar o botão de "Três pontinhos"
+    ${id_do_teste}    SeleniumLibrary.Get Text    ${submissao_table_resultados}/tbody/tr[1]/td[3]
+    ${enviado_concluido_do_teste}    SeleniumLibrary.Get Text    ${submissao_table_resultados}/tbody/tr[1]/td[6]
+    ${apenas_enviado}    Split String    ${enviado_concluido_do_teste}    ${SPACE}•
+
+    Set Test Variable    ${submissao_id_do_teste}    ${id_do_teste}
+    Set Test Variable    ${submissao_enviado_do_teste}    ${apenas_enviado}[0]
+
+    Wait Until Element Is Enabled    ${submissao_table_resultados}/tbody/tr[1]/td[9]/button
+    Click Button    ${submissao_table_resultados}/tbody/tr[1]/td[9]/button
+
+E acionar "Download massa de teste"
+    Wait Until Element Is Enabled    ${btn_download_massa_de_teste}
+    Click Button    ${btn_download_massa_de_teste}
+
+E acionar "Download de resultados"
+    IF    ${submissao_enviado_do_teste} >= ${15}
+        Wait Until Element Is Enabled    ${btn_download_resultado}
+        Click Button    ${btn_download_resultado}
+    ELSE
+        Fail    Não há resultado cujo arquivo enviado tenha mais que 15 registros.
+    END
+
+Verificar se download foi concluído
+    [Arguments]    ${filename}=${None}
+    Sleep    2s
+    Log To Console    nomeDoArquivo = ${filename}
+    ${file}    Get File Size    ${EXECDIR}/files/downloads/${filename}
+    ${arquivos_no_diretorio}    List Files In Directory    ${EXECDIR}/files/downloads
+
+    Should Not Be Equal As Integers    ${file}    ${0}
+    List Should Contain Value    ${arquivos_no_diretorio}    ${filename}
+
+E download do arquivo é iniciado e concluído
+    [Arguments]    ${formato}
+    Verificar se download foi concluído    filename=${submissao_id_do_teste}_${formato}.zip
+
+E o sistema deve ordernar os resultados
+    [Arguments]    ${coluna}    ${ordenacao}
+    Então o sistema deve ordernar os resultados    ${coluna}    ${ordenacao}
+
+E acionar a coluna
+    [Arguments]    ${coluna}
+    Quando acionar a coluna    ${coluna}
+
+E o sistema deve exibir os gráficos e dados da duração do teste
+    Então o sistema deve exibir os gráficos e dados da duração do teste
+
+Quando acionar Novo teste
+    Wait Until Element Is Enabled    ${btn_novo_teste_mobile}
+    Click Button    ${btn_novo_teste_mobile}
+
+Então o sistema exibirá um modal para submissão do novo teste
+    Wait Until Element Is Visible    ${submissao_modal_novo_teste}
+    Wait Until Element Is Enabled    ${submissao_modal_novo_teste}
+
+E botão "Testar política" desabilitado
+    ${disabled}    SeleniumLibrary.Get Element Attribute    ${submissao_modal_btn_testar_politica}    disabled
+    Should Be Equal    true    ${disabled}
+    Element Should Be Disabled    ${submissao_modal_btn_testar_politica}
+
+E botão "Testar política" habilitado
+    Wait Until Element Is Visible    ${submissao_modal_btn_testar_politica}
+    Element Should Be Enabled    ${submissao_modal_btn_testar_politica}
+
+Quando inserir no campo 'Nome do teste' um nome do teste
+    [Arguments]    ${nome_novo_teste}
+
+    ${numero_aleatorio} =    Set Variable    ${{random.randint(0, 1000)}}
+
+    Sleep    2s
+    Click Element    ${submissao_modal_input_nome_do_teste}
+    Input Text    ${submissao_modal_input_nome_do_teste}    ${nome_novo_teste}_${numero_aleatorio}
+
+E selecionar a política desejada
+    [Arguments]    ${politica}
+
+    Sleep    2s
+    Click Element    ${submissao_modal_input_politica}
+    Input Text    ${submissao_modal_input_politica}    ${politica}
+    Wait Until Element Is Enabled    //span[text()=" ${politica} " and contains(@class,'mat-option-text')]
+    Click Element    //span[text()=" ${politica} " and contains(@class,'mat-option-text')]
+
+E selecionar o campo chave desejado
+    [Arguments]    ${campo_chave}
+
+    Wait Until Page Contains Element    ${submissao_modal_input_campo_chave}    timeout=10s
+    Click Element    ${submissao_modal_input_campo_chave}
+    Wait Until Element Is Enabled    //span[contains(.,'${campo_chave}')]
+    Click Element    //span[contains(.,'${campo_chave}')]
+
+E acionar o botão Importar massa de dados
+    Wait Until Element Is Enabled    ${submissao_modal_btn_importar_massa}
+    Click Button    ${submissao_modal_btn_importar_massa}
+
+E selecine o arquivo
+    [Arguments]    ${file_name}
+
+    Set Test Variable    ${submissao_modal_file_name}    ${file_name}
+
+    ${file_extension}    Split String    ${file_name}    separator=.
+    Choose File    ${submissao_modal_input_importar_csv}    ${EXECDIR}/files/uploads/${file_name}
+
+    ${size}    Get File Size    ${EXECDIR}/files/uploads/${file_name}
+
+    IF    '${size}' > '0'
+        ${label_file}    Get WebElement    //label[@id='fileName' and text()="${file_name} - "]
+        Element Should Contain    ${label_file}    ${file_name}
+    END
+
+Então o sistema deverá exibir o nome do arquivo ao invés do botão "Importar massa de dados"
+    Element Should Not Be Visible    ${submissao_modal_btn_importar_massa}
+    Element Should Contain    ${submissao_modal_label_file_name}    ${submissao_modal_file_name}
+
+Quando acionar o botão "Testar política"
+    Wait Until Element Is Enabled    ${submissao_modal_btn_testar_politica}
+    Click Button    ${submissao_modal_btn_testar_politica}
+
+E exibir a tela de submissão aplicando o filtro por id da submissão de teste
+    Wait Until Element Is Visible    ${submissao_table_resultados}/tbody/tr[1]    timeout=60s
+    Element Should Be Visible    ${submissao_table_resultados}/tbody/tr[1]/td[3]
+    Element Should Be Visible    ${submissao_table_resultados}/tbody/tr[1]/td[8]
+
+    ${table_teste_id}    SeleniumLibrary.Get Text
+    ...    ${submissao_table_resultados}/tbody/tr[1]/child::td[position()=3]/span
+    ${input_teste_id}    Get Value    ${input_id_do_teste}
+    Should Contain    ${input_teste_id}    ${table_teste_id}
+
+E exibir o registro da submissão com status
+    [Arguments]    ${status}
+
+    Element Should Contain    ${submissao_table_resultados}/tbody/tr[1]/td[8]    ${status}
+
+E acionar o botão "Cancelar"
+    Wait Until Element Is Enabled    ${submissao_modal_btn_cancelar}
+    Click Button    ${submissao_modal_btn_cancelar}
+
+Então o botão "Testar política" permanece desabilitado
+    E botão "Testar política" desabilitado

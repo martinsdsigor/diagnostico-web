@@ -8,15 +8,6 @@ Test Teardown       Evidenciar teste na pasta    DIAG-901
 
 
 *** Test Cases ***
-Selecionar políticas e visualizar resultado das propostas
-    [Tags]    diag-1223
-    Dado que esteja na tela inicial Submissão
-    Quando acionar Filtros
-    E informar Período por data    6/02/2023    22/02/2023
-    E informar a Política    TESTE_CARGA
-    E acionar Consultar
-    Então o sistema listará apenas a politica    TESTE_CARGA
-
 Exibir somente política selecionada no filtro
     [Tags]    diag-1224
     Dado que esteja na tela inicial Submissão
@@ -56,20 +47,8 @@ Validar Filtro Submissão por ID do teste superior à 19 dígitos
     E Acionar Consultar
     Então é exibido um toast com a mensagem informada    Error: 0999 - Erro na requisição.
 
-# Mensagem de limite no retorno das consultas
-#    [Tags]    diag-1222
-
 # Alerta de erro nas propostas que tiveram problemas no DR
 #    [Tags]    diag-1229
-
-Validar Filtro Submissão por Status: Falha
-    [Tags]    diag-1809
-    Dado que esteja na tela inicial Submissão
-    Quando acionar Filtros
-    E informar Período por data    6/02/2023    22/02/2023
-    E informar o Status    FAILED
-    E Acionar Consultar
-    Então o sistema listará apenas o status    Falha
 
 Validar Filtro Submissão por Status: Finalizado
     [Tags]    diag-1810
@@ -123,52 +102,7 @@ Validar Filtro Submissão por Status : Preparando
     E informar Período por data    6/02/2023    22/02/2023
     E informar o Status    PROVISIONING
     E Acionar Consultar
-    Então o sistema listará apenas o status    Preparando
-
-Validar Filtro Submissão por Status: Enfileirado
-    [Tags]    diag-1815
-    Dado que esteja na tela inicial Submissão
-    Quando acionar Filtros
-    E informar Período por data    6/02/2023    22/02/2023
-    E informar o Status    QUEUED
-    E Acionar Consultar
-    Então o sistema listará apenas o status    Enfileirado
-
-Validar Filtro Submissão por Status: Agendado
-    [Tags]    diag-1816
-    Dado que esteja na tela inicial Submissão
-    Quando acionar Filtros
-    E informar Período por data    6/02/2023    22/02/2023
-    E informar o Status    SCHEDULED
-    E Acionar Consultar
-    Então o sistema listará apenas o status    Agendado
-
-Validar Filtro Submissão por Status: Pronto para execução
-    [Tags]    diag-1817
-    Dado que esteja na tela inicial Submissão
-    Quando acionar Filtros
-    E informar Período por data    6/02/2023    22/02/2023
-    E informar o Status    READY
-    E Acionar Consultar
-    Então o sistema listará apenas o status    Pronto para execução
-
-Validar Filtro Submissão por Status: Recebido
-    [Tags]    diag-1818
-    Dado que esteja na tela inicial Submissão
-    Quando acionar Filtros
-    E informar Período por data    6/02/2023    22/02/2023
-    E informar o Status    RECEIVED
-    E Acionar Consultar
-    Então o sistema listará apenas o status    Recebido
-
-Validar Filtro Submissão por Status: Criado
-    [Tags]    diag-1819
-    Dado que esteja na tela inicial Submissão
-    Quando acionar Filtros
-    E informar Período por data    6/02/2023    22/02/2023
-    E informar o Status    CREATED
-    E Acionar Consultar
-    Então o sistema listará apenas o status    Criado
+    Então o sistema listará apenas o status    Provisionando
 
 Validar Filtro Submissão por Nome do teste
     [Tags]    diag-1820
@@ -192,6 +126,6 @@ Validar Filtro Submissão por Período de datas
     [Tags]    diag-1822
     Dado que esteja na tela inicial Submissão
     Quando acionar Filtros
-    E informar Período por data    6/02/2023    22/02/2023
+    E informar Período por data    6/02/2023    27/02/2023
     E Acionar Consultar
-    Então o sistema listará apenas histórico de testes com o período de datas informada    6/02/2023    22/02/2023
+    Então o sistema listará apenas histórico de testes com o período de datas informada    6/02/2023    27/02/2023

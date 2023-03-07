@@ -5,6 +5,10 @@ Resource    ../pages/HomePage.robot
 
 *** Keywords ***
 Usuario loga e acessa o produto
+    # Cria a pasta downloads para evitar que testes falhem.
+    ${download_outputdir}  Join Path    ${EXECDIR}    files    downloads
+    Create Directory    ${download_outputdir}
+    # Adiciona todos os downloads de arquivos no caminho files/downloads
     ${download_directory}    Join Path    ${EXECDIR}    files    downloads
     ${prefs}    Create Dictionary    download.default_directory=${download_directory}
 
@@ -45,6 +49,7 @@ Evidenciar teste na pasta
 
     Organizar arquivos de log    deletar    csv
     Organizar arquivos de log    deletar    pdf
+    Organizar arquivos de log    deletar    zip
 
 Organizar arquivos de log
     [Arguments]    ${action}    ${file_extension}    ${folder}=${None}    ${directory}=${EXECDIR}//files//downloads
@@ -80,6 +85,11 @@ Verificar se download foi concluído
     ${caminho_arquivo}    Join Path    ${EXECDIR}    files    downloads
     Wait Until Created    ${caminho_arquivo}/${filename}    timeout=10s
     ${file}    Get File Size    ${EXECDIR}/files/downloads/${filename}
+
+    ${arquivos_no_diretorio}    List Files In Directory    ${EXECDIR}/files/downloads
+
+    Log To Console    ${arquivos_no_diretorio} encontrado no diretório /files/downloads
+
     Should Not Be Equal As Integers    ${file}    ${0}
 
 Trocar para conta

@@ -9,19 +9,23 @@ Acionar Filtros
     Wait Until Element Is Visible    ${filtro_button_filtros}
     Click Element    ${filtro_button_filtros}
 
-Informar Contratante
-    [Arguments]    ${Contratante}
+Informar Cliente
+    [Arguments]    @{cliente}
     Wait Until Element Is Visible    ${filtro_select_contratante}
     Click Element    ${filtro_select_contratante}
-    ${class}    SeleniumLibrary.Get Element Attribute
-    ...    //span[.='Contratante']/parent::div/parent::div/following::div/div/div/mat-checkbox[contains(.,' ${Contratante} ')]
-    ...    class
-    ${is_checked}    Run Keyword And Return Status    Should Contain    ${class}    mat-checkbox-checked
 
-    IF    ${is_checked} != True
-        Click Element
-        ...    xpath://span[.='Contratante']/parent::div/parent::div/following::div/div/div/mat-checkbox[contains(.,' ${Contratante} ')]
+    FOR    ${element}    IN    @{cliente}
+        ${class}    SeleniumLibrary.Get Element Attribute
+        ...    //span[.='Cliente']/parent::div/parent::div/following::div/div/div/mat-checkbox[contains(.,' ${element} ')]
+        ...    class
+        ${is_checked}    Run Keyword And Return Status    Should Contain    ${class}    mat-checkbox-checked
+
+        IF    ${is_checked} != True
+            Click Element
+            ...    xpath://span[.='Cliente']/parent::div/parent::div/following::div/div/div/mat-checkbox[contains(.,' ${element} ')]
+        END
     END
+
 
 Informar Período por data
     [Arguments]    ${Data_Inicial}    ${Data_Final}=${None}    ${hora_inicio}=${None}    ${hora_fim}=${None}
@@ -57,7 +61,7 @@ Informar Periodo por
     Input Text    ${filtro_input_ultimos_periodo}    ${Ultimos}
     Click Element    ${filtro_select_ultimos_periodo}
     Click Element
-    ...    //div[@class='ng-tns-c81-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary']/*[.=' ${Periodo} ']
+    ...    //div[contains(@role, 'listbox')]/*[.=' ${Periodo} ']
 
 Informar Últimas propostas
     [Arguments]    ${Quantidade}
@@ -86,7 +90,7 @@ Informar Resultado
     [Arguments]    ${Resultado}
     Wait Until Element Is Enabled    ${filtro_select_resultado}
     Click Element    ${filtro_select_resultado}
-    Input Text    ${filtro_sucesso_search_box}    ${Resultado}
+    Input Text    ${filtro_resultado_search_box}    ${Resultado}
     Click Element
     ...    xpath://p[contains(text(), '${Resultado}')]/parent::div/parent::div/following::div[3][not(contains(@class, 'disabled'))]
 
@@ -127,11 +131,13 @@ Informar ID do Lote
 Informar IP Origem
     [Arguments]    ${IP_Origem}
     Wait Until Element Is Enabled    ${filtro_input_ip_origem}
+    Scroll Element Into View    ${filtro_input_ip_servidor}
     Input Text    ${filtro_input_ip_origem}    ${IP_Origem}
 
 Informar IP Servidor
     [Arguments]    ${IP_Servidor}
     Wait Until Element Is Enabled    ${filtro_input_ip_servidor}
+    Scroll Element Into View    ${filtro_input_ip_servidor}
     Input Text    ${filtro_input_ip_servidor}    ${IP_Servidor}
 
 Acionar Consultar

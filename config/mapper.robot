@@ -7,6 +7,7 @@ Library     Collections
 Library     XML
 Library     Process
 Library     os
+Library     ../utils/CustomDateUtils.py
 
 Resource    ./config.robot
 Resource    ./hooks.robot
@@ -15,7 +16,7 @@ Resource    ./hooks.robot
 Resource    ../locators/login.robot
 Resource    ../locators/menu.robot
 Resource    ../locators/home.robot
-Resource    ../locators/detalhamento.robot
+Resource    ../locators/detalhamento.robot/
 Resource    ../locators/submission.robot
 Resource    ../locators/graficos.robot
 

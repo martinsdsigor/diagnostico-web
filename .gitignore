@@ -5,3 +5,4 @@ venv
 log/
 .idea/
 .vscode/
+utils/__pycache__/

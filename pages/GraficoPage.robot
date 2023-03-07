@@ -118,7 +118,7 @@ E informar um cliente
 
 Então o sistema exibirá o gráfico de acordo com o cliente
     [Arguments]    ${cliente}
-    Wait Until Page Contains Element    ${graficos_svg_content}    timeout=30s
+    Wait Until Page Contains Element    ${graficos_svg_content}    timeout=${IMPLICITY_WAIT}
     Page Should Contain Element    ${graficos_svg_content}
     Wait Until Element Is Visible
     ...    //*[name()='g'][contains(@class, 'highcharts-legend-item')]//*[name()='text'][text()='${cliente}']

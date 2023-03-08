@@ -83,7 +83,7 @@ Retornar para aba
 Verificar se download foi concluído
     [Arguments]    ${filename}=${None}
     ${caminho_arquivo}    Join Path    ${EXECDIR}    files    downloads
-    Wait Until Created    ${caminho_arquivo}/${filename}    timeout=10s
+    Wait Until Created    ${caminho_arquivo}/${filename}    timeout=${IMPLICITY_WAIT}
     ${file}    Get File Size    ${EXECDIR}/files/downloads/${filename}
 
     ${arquivos_no_diretorio}    List Files In Directory    ${EXECDIR}/files/downloads

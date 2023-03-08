@@ -12,6 +12,19 @@ Dado ter selecionado um periodo para consultar
     Informar Período por data    11/01/2023
     Acionar Consultar
 
+Dado ter selecionado um periodo informando política e resultado
+    [Arguments]    ${politica}    ${status}
+    Acionar Filtros
+    Informar Periodo por
+    Informar Política    ${politica}
+    Informar Resultado    ${status}
+    Acionar Consultar
+
+Quando clicar em
+    [Arguments]    ${elemento}
+    Wait Until Element Is Visible    //a[text()="${elemento}"]
+    Click Element    //a[text()="${elemento}"]
+
 E selecionado o primeiro registro retornado
     Selecionar primeiro registro da consulta
     Retornar codigo da operacao selecionado
@@ -206,6 +219,10 @@ Então o download de um csv contendo as variáveis deve ser concluído
     Should Contain    ${file}    ${variavel}
     Should Contain    ${file}    ${valor_processado}
 
+
+Então o download de um csv contendo as entradas deve ser concluído
+    hooks.Verificar se download foi concluído    Entradas.csv
+
 Então os resultados serão atualizados com os valores correspondentes
     Wait Until Element Is Visible    ${detalhamento_table_variaveis}
     Element Should Contain    ${detalhamento_table_variaveis}    ${Detalhamento_Filtrar_Variaveis}
@@ -294,7 +311,7 @@ E clicar em ressubmeter
     Click Element    ${detalhamento_button_ressubmeter}
 
 E informar a politica
-    [Arguments]    ${politica}    ${chave}
+    [Arguments]    ${politica}    ${chave}=${None}
 
     Wait Until Element Is Enabled    ${label_politica}    ${IMPLICITY_WAIT}
     Wait Until Element Is Enabled    //*[@id="mat-checkbox-24"]    ${IMPLICITY_WAIT}
@@ -304,8 +321,11 @@ E informar a politica
     ...    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
     Click Element    //*[text()="${politica}"]/parent::div/parent::div/following-sibling::div/child::div[2]
 
-    Click Element    ${input_chave}
-    Click Element    //p[text()="${chave}"]
+    IF    '${chave}' != '${None}'
+        Click Element    ${input_chave}
+        Click Element    //p[text()="${chave}"]        
+    END
+
 
 Então o sistema retornará dados relacionados a busca equivalente ao mesmo período
     ${cells}    SeleniumLibrary.Get Element Count    xpath://table/tbody/tr
@@ -367,7 +387,7 @@ Então as informações do registro devem ser exportadas para um arquivo csv
     ...    3. Compara os resultados encontrados na interface com os resultados dentro do arquivo csv
     [Arguments]    ${nome_arquivo}
 
-    Verificar se download foi concluído    ${nome_arquivo}
+    hooks.Verificar se download foi concluído    ${nome_arquivo}
     ${caminho}    Join Path    files    downloads    ${nome_arquivo}
     ${csv}    Get File    ${caminho}
 

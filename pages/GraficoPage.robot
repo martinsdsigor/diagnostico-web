@@ -148,15 +148,50 @@ E informar Últimos por Período
     Element Should Be Visible    //span[text()='Período']/following-sibling::p[contains(text(),'${data_hora_fim}')]
     Acionar Consultar
 
-Então o sistema exibirá o gráfico de acordo com Últimos por Período
-    Wait Until Page Contains Element    ${graficos_svg_content}    timeout=30s
+Então o sistema exibirá o gráfico de acordo com Últimos por Período TALVEZ EXCLUIR
+    Wait Until Page Contains Element    ${graficos_svg_content}    timeout=${IMPLICITY_WAIT}
     Page Should Contain Element    ${graficos_svg_content}
     ${data_inicial}    Get Text    //span[text()='Período']/following-sibling::p[1]
-    ${data_final}    Get Text    //span[text()='Período']/following-sibling::p[1]
+    ${data_final}    Get Text    //span[text()='Período']/following-sibling::p[2]
     Element Should Contain
     ...    //*[name()='g'][@class='highcharts-axis-labels highcharts-xaxis-labels']
     ...    ${data_inicial}
     Element Should Contain    //*[name()='g'][@class='highcharts-axis-labels highcharts-xaxis-labels']    ${data_final}
+
+Então o sistema exibirá o gráfico de acordo com Últimos por Período
+    Wait Until Page Contains Element    ${graficos_svg_content}    timeout=${IMPLICITY_WAIT}
+    Page Should Contain Element    ${graficos_svg_content}
+    
+
+    ${ultima_data_horario}    Get Text    //*[@class="highcharts-axis-labels highcharts-xaxis-labels"]/*[last()]
+    ${primeira_data_horario}    Get Text   //*[@class="highcharts-axis-labels highcharts-xaxis-labels"]/*[3]
+    
+    
+    ${horario_string}    Convert To String    ${ultima_data_horario}
+    ${horario}    Split String    ${horario_string}    separator=${SPACE}
+    Set Test Variable    ${hora_minuto_segundo}    ${horario[1]}
+    ${escala}    Split String    ${hora_minuto_segundo}    separator=:
+    Set Test Variable    ${hora_fim}    ${escala[0]}
+
+    ${inicio_horario_string}    Convert To String    ${primeira_data_horario}
+    ${inicio_horario}    Split String    ${inicio_horario_string}    separator=${SPACE}
+    Set Test Variable    ${inicio_hora_minuto_segundo}    ${inicio_horario[1]}
+    ${inicio_escala}    Split String    ${inicio_hora_minuto_segundo}    separator=:
+    Set Test Variable    ${hora_inicio}    ${inicio_escala[0]}
+
+    ${hora_inicio_int}    Convert To Integer    ${hora_inicio}
+    ${hora_fim_int}    Convert To Integer    ${hora_fim}
+    Log To Console    Hora inicio: ${hora_inicio}
+    Log To Console    Hora final: ${hora_fim}
+
+    ${diferenca_inicio_fim}    Evaluate    ${hora_fim_int}-${hora_inicio_int}
+
+    Log To Console    Diferença entre inicio e fim: ${diferenca_inicio_fim} hora(s)
+
+    ${diferenca_inicio_fim_string}    Convert To String    ${diferenca_inicio_fim}
+
+    Should Contain Any    ${diferenca_inicio_fim_string}    1    0
+
 
 E informar Últimas propostas
     [Arguments]    ${quantidade}
